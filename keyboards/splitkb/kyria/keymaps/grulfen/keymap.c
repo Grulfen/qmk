@@ -15,6 +15,9 @@
  */
 #include QMK_KEYBOARD_H
 
+
+// {{{ layers
+
 enum layers {
     _QWERTY = 0,
     _NAV,
@@ -149,11 +152,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //     ),
 };
 
-/* The default OLED and rotary encoder code can be found at the bottom of qmk_firmware/keyboards/splitkb/kyria/rev1/rev1.c
- * These default settings can be overriden by your own settings in your keymap.c
- * For your convenience, here's a copy of those settings so that you can uncomment them if you wish to apply your own modifications.
- * DO NOT edit the rev1.c file; instead override the weakly defined default functions by your own.
- */
+// }}}
+
+// {{{ rotary encoder
 
 #ifdef ENCODER_ENABLE
 bool encoder_update_user(uint8_t index, bool clockwise) {
@@ -169,3 +170,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     return false;
 }
 #endif
+
+// }}}
+
+// vim: set foldmethod=marker:foldlevel=0
