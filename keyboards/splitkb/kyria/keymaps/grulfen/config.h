@@ -30,3 +30,6 @@
 // If you are using an Elite C rev3 on the slave side, uncomment the lines below:
 // #define SPLIT_USB_DETECT
 // #define NO_USB_STARTUP_CHECK
+
+#define ONESHOT_TIMEOUT 1000  // Time in ms before the one shot key is released
+#define ONESHOT_TAP_TOGGLE 5  // tapping this number of times holds the key until tapped once
