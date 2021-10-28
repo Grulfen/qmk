@@ -28,8 +28,8 @@ enum layers {
 // Aliases for readability
 #define QWERTY   DF(_QWERTY)
 
-#define SYM      MO(_SYM)
-#define NAV      MO(_NAV)
+#define SYM      OSL(_SYM)
+#define NAV      OSL(_NAV)
 
 #define CTL_ESC  MT(MOD_LCTL, KC_ESC)
 #define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
