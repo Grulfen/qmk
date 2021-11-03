@@ -134,6 +134,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // }}}
 
+// {{{ combos
+//
+//
+enum combo_events {
+  OP_BSPC,
+  IO_DEL,
+  COMBO_LENGTH
+};
+uint16_t COMBO_LEN = COMBO_LENGTH;
+
+const uint16_t PROGMEM op_combo[] = {KC_O, KC_P, COMBO_END};
+const uint16_t PROGMEM io_combo[] = {KC_I, KC_O, COMBO_END};
+
+combo_t key_combos[] = {
+    [OP_BSPC] = COMBO(op_combo, KC_BSPC),
+    [IO_DEL] = COMBO(io_combo, KC_DEL),
+};
+// }}}
+
 // {{{ rotary encoder
 
 #ifdef ENCODER_ENABLE
