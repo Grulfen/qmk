@@ -161,9 +161,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
         // Volume control
         if (clockwise) {
-            tap_code(KC_PGUP);
+            tap_code(KC_UP);
         } else {
-            tap_code(KC_PGDN);
+            tap_code(KC_DOWN);
         }
     }
     return false;
