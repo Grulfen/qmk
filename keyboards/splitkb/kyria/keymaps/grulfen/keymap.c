@@ -139,14 +139,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //
 enum combo_events {
   IO_BSPC,
+  KL_ENT,
   COMBO_LENGTH
 };
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 const uint16_t PROGMEM io_combo[] = {KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM kl_combo[] = {KC_K, KC_L, COMBO_END};
 
 combo_t key_combos[] = {
     [IO_BSPC] = COMBO(io_combo, KC_BSPC),
+    [KL_ENT] = COMBO(kl_combo, KC_ENT),
 };
 // }}}
 
