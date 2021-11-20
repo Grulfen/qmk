@@ -39,6 +39,18 @@ enum layers {
 #define RSFT_SPC MT(MOD_RSFT, KC_SPC)
 #define AGR_BSP  MT(MOD_RALT, KC_BSPC)
 
+// Left-hand home row mods
+#define GUI_A LGUI_T(KC_A)
+#define ALT_S LALT_T(KC_S)
+#define SFT_D LSFT_T(KC_D)
+#define CTL_F LCTL_T(KC_F)
+
+// Right-hand home row mods
+#define CTL_J RCTL_T(KC_J)
+#define SFT_K LSFT_T(KC_K)
+#define ALT_L LALT_T(KC_L)
+#define GUI_SCLN RGUI_T(KC_SCLN)
+
 #define NAV_ENT  LT(_NAV, KC_ENT)
 #define SYM_BSP  LT(_SYM, KC_BSPC)
 
@@ -54,19 +66,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |  Tab   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  [ {   |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |Ctrl/Esc|   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |Ctrl/' "|
+ * |  Esc   |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  ' "   |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * | LShift |   Z  |   X  |   C  |   V  |   B  | [ {  |      |  |      |  ] } |   N  |   M  | ,  < | . >  | /  ? | RShift |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      | LAlt |Enter/| LSft/| Nav  |  | Sym  | LSft/| Sym  | AltGr| RGUI |
+ *                        |      |      |Enter/| LSft/| Nav  |  | Sym  | LSft/| Sym  | AltGr| RGUI |
  *                        |      |      | Nav  | Space|      |  |      | Space|      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
      KC_TAB  ,   KC_Q ,  KC_W  ,  KC_E  ,   KC_R ,   KC_T ,                                        KC_Y,   KC_U ,   KC_I ,   KC_O ,   KC_P , KC_LBRC,
-     CTL_ESC ,   KC_A ,  KC_S  ,  KC_D  ,   KC_F ,   KC_G ,                                        KC_H,   KC_J ,   KC_K ,   KC_L , KC_SCLN,CTL_QUOT,
+     KC_ESC  ,   GUI_A,  ALT_S ,  SFT_D ,  CTL_F ,   KC_G ,                                        KC_H,   CTL_J,   SFT_K,   ALT_L,GUI_SCLN,KC_QUOTE,
      KC_LSFT ,   KC_Z ,  KC_X  ,  KC_C  ,   KC_V ,   KC_B , KC_LBRC, _______, _______, KC_RBRC, KC_N   ,   KC_M , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,
-                                 _______, KC_LALT, NAV_ENT, SFT_SPC,  NAV   , SYM    ,RSFT_SPC,     SYM, KC_RALT, KC_RGUI
+                                 _______, _______, NAV_ENT, SFT_SPC,  NAV   , SYM    ,RSFT_SPC,     SYM, KC_RALT, KC_RGUI
     ),
 /*
  * Nav Layer: Media, navigation, F-keys
