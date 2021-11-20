@@ -22,14 +22,15 @@ enum layers {
     _QWERTY = 0,
     _NAV,
     _SYM,
+    _NUMBAR,
 };
-
 
 // Aliases for readability
 #define QWERTY   DF(_QWERTY)
 
 #define SYM      OSL(_SYM)
 #define NAV      OSL(_NAV)
+#define NUMBAR   OSL(_NUMBAR)
 
 #define CTL_ESC  MT(MOD_LCTL, KC_ESC)
 #define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
@@ -47,7 +48,7 @@ enum layers {
 
 // Right-hand home row mods
 #define CTL_J RCTL_T(KC_J)
-#define SFT_K LSFT_T(KC_K)
+#define SFT_K RSFT_T(KC_K)
 #define ALT_L LALT_T(KC_L)
 #define GUI_SCLN RGUI_T(KC_SCLN)
 
@@ -78,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TAB  ,   KC_Q ,  KC_W  ,  KC_E  ,   KC_R ,   KC_T ,                                        KC_Y,   KC_U ,   KC_I ,   KC_O ,   KC_P , KC_LBRC,
      KC_ESC  ,   GUI_A,  ALT_S ,  SFT_D ,  CTL_F ,   KC_G ,                                        KC_H,   CTL_J,   SFT_K,   ALT_L,GUI_SCLN,KC_QUOTE,
      KC_LSFT ,   KC_Z ,  KC_X  ,  KC_C  ,   KC_V ,   KC_B , KC_LBRC, _______, _______, KC_RBRC, KC_N   ,   KC_M , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,
-                                 _______, _______, NAV_ENT, SFT_SPC,  NAV   , SYM    ,RSFT_SPC,     SYM, KC_RALT, KC_RGUI
+                                 _______, _______, NAV_ENT, NUMBAR ,  NAV   , SYM    ,RSFT_SPC,     SYM, KC_RALT, KC_RGUI
     ),
 /*
  * Nav Layer: Media, navigation, F-keys
@@ -120,6 +121,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TILD , KC_EXLM,  KC_AT , KC_HASH,  KC_DLR, KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PLUS,
      KC_PIPE , KC_BSLS, KC_COLN, KC_SCLN, KC_MINS, KC_LBRC, KC_LCBR, _______, _______, KC_RCBR, KC_RBRC, KC_UNDS, KC_COMM,  KC_DOT, KC_SLSH, KC_QUES,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
+
+/*
+ * Raise Layer: Functions, Numbers
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |        |      |      |      |      |      |                              |      | 7 &  | 8 *  | 9 (  | - _  |        |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |                              |      | 4 $  | 5 %  | 6 ^  | = +  |        |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |      |  |      |      |      | 1 !  | 2 @  | 3 #  |  /   |        |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        |      |      |      |      |      |  |      |      | 0 )  |      |      |
+ *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [_NUMBAR] = LAYOUT(
+      _______, _______, _______, _______, _______, _______,                                     _______, KC_7,    KC_8,    KC_9, KC_MINS, _______,
+      _______, _______, _______, _______, _______, _______,                                     _______, KC_4,    KC_5,    KC_6, KC_PLUS, _______,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_1,    KC_2,    KC_3, KC_SLSH, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, KC_0   , _______, _______
     ),
 
 // /*
