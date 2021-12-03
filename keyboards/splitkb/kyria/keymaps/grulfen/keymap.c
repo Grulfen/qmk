@@ -15,7 +15,7 @@
  */
 #include QMK_KEYBOARD_H
 
-
+#include "features/casemodes.h"
 // {{{ layers
 
 enum layers {
@@ -23,6 +23,11 @@ enum layers {
     _NAV,
     _SYM,
     _NUMBAR,
+};
+
+enum custom_keycodes {
+    CAPSWORD = SAFE_RANGE,
+    SNEKCASE,
 };
 
 // Aliases for readability
@@ -71,15 +76,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * | LShift |   Z  |   X  |   C  |   V  |   B  | [ {  |      |  |      |  ] } |   N  |   M  | ,  < | . >  | /  ? | RShift |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |Enter/| LSft/| Nav  |  | Sym  | LSft/| Sym  | AltGr| RGUI |
- *                        |      |      | Nav  | Space|      |  |      | Space|      |      |      |
+ *                        |      |caps- |Enter/| LSft/| Nav  |  | Sym  | LSft/| Sym  | AltGr| RGUI |
+ *                        |      |word  | Nav  | Space|      |  |      | Space|      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
      KC_TAB  ,   KC_Q ,  KC_W  ,  KC_E  ,   KC_R ,   KC_T ,                                        KC_Y,   KC_U ,   KC_I ,   KC_O ,   KC_P , KC_LBRC,
      KC_ESC  ,   GUI_A,  ALT_S ,  SFT_D ,  CTL_F ,   KC_G ,                                        KC_H,   CTL_J,   SFT_K,   ALT_L,GUI_SCLN,KC_QUOTE,
      KC_LSFT ,   KC_Z ,  KC_X  ,  KC_C  ,   KC_V ,   KC_B , KC_LBRC, _______, _______, KC_RBRC, KC_N   ,   KC_M , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,
-                                 _______, _______, NAV_ENT, NUMBAR ,  NAV   , SYM    ,RSFT_SPC,     SYM, KC_RALT, KC_RGUI
+                                 _______,CAPSWORD, NAV_ENT, NUMBAR ,  NAV   , SYM    ,RSFT_SPC,     SYM, KC_RALT, KC_RGUI
     ),
 /*
  * Nav Layer: Media, navigation, F-keys
@@ -208,6 +213,30 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     return false;
 }
 #endif
+
+// }}}
+
+// {{{ process_record_user
+bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+    if (!process_case_modes(keycode, record)) {
+        return false;
+    }
+    // Regular user keycode case statement
+    switch (keycode) {
+        case CAPSWORD:
+            if (record->event.pressed) {
+                enable_caps_word();
+            }
+            return false;
+        case SNEKCASE:
+            if (record->event.pressed) {
+                enable_xcase_with(KC_UNDS);
+            }
+            return false;
+        default:
+            return true;
+    }
+}
 
 // }}}
 
