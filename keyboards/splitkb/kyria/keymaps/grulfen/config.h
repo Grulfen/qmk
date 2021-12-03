@@ -41,3 +41,6 @@
 // When using the default resolution of 4, if you notice your encoder skipping
 // every other tick, lower the resolution to 2.
 #define ENCODER_RESOLUTION 2
+
+// Use shift instead of capslock for caps_word
+#define CAPSWORD_USE_SHIFT
