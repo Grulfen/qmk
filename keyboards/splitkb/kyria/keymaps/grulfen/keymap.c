@@ -16,6 +16,7 @@
 #include QMK_KEYBOARD_H
 
 #include "features/casemodes.h"
+#include "keymap_swedish.h"
 
 // {{{ tap dances
 enum {
@@ -69,16 +70,16 @@ enum custom_keycodes {
 #define AGR_BSP  MT(MOD_RALT, KC_BSPC)
 
 // Left-hand home row mods
-#define GUI_A LGUI_T(KC_A)
-#define ALT_S LALT_T(KC_S)
-#define SFT_D LSFT_T(KC_D)
-#define CTL_F LCTL_T(KC_F)
+#define GUI_A LGUI_T(SE_A)
+#define ALT_S LALT_T(SE_S)
+#define SFT_D LSFT_T(SE_D)
+#define CTL_F LCTL_T(SE_F)
 
 // Right-hand home row mods
-#define CTL_J RCTL_T(KC_J)
-#define SFT_K RSFT_T(KC_K)
-#define ALT_L LALT_T(KC_L)
-#define GUI_SCLN RGUI_T(KC_SCLN)
+#define CTL_J RCTL_T(SE_J)
+#define SFT_K RSFT_T(SE_K)
+#define ALT_L LALT_T(SE_L)
+#define GUI_ODIA RGUI_T(SE_ODIA)
 
 #define NAV_ENT  LT(_NAV, KC_ENT)
 #define SYM_BSP  LT(_SYM, KC_BSPC)
@@ -93,21 +94,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Base Layer: QWERTY
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |  Tab   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  [ {   |
+ * |  Tab   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |   Å    |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |  Esc   |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  ' "   |
+ * |  Esc   |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  |   Ö  |   Ä    |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * |        |   Z  |   X  |   C  |   V  |   B  | [ {  |      |  |      |  ] } |   N  |   M  | ,  < | . >  | /  ? |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |caps- |Enter/|Numbar| Nav  |  | Sym  | Space| Sym  | AltGr| RGUI |
- *                        |      |word  | Nav  |      |      |  |      |      |      |      |      |
+ *                        | SE/US|Caps- |Enter/|Numbar| Nav  |  | Sym  | Space| Sym  | AltGr| RGUI |
+ *                        |      |Word  | Nav  |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
-     KC_TAB  ,   KC_Q ,  KC_W  ,  KC_E  ,   KC_R ,   KC_T ,                                        KC_Y,   KC_U ,   KC_I ,   KC_O ,   KC_P , KC_LBRC,
-     KC_ESC  ,   GUI_A,  ALT_S ,  SFT_D ,  CTL_F ,   KC_G ,                                        KC_H,   CTL_J,   SFT_K,   ALT_L,GUI_SCLN,KC_QUOTE,
-     _______ ,   KC_Z ,  KC_X  ,  KC_C  ,   KC_V ,   KC_B , KC_LBRC, _______, _______, KC_RBRC, KC_N   ,   KC_M , KC_COMM, KC_DOT , KC_SLSH, _______,
-                                 _______, TD_CPS , NAV_ENT, NUMBAR ,  NAV   , SYM    ,  KC_SPC,     SYM, KC_RALT, KC_RGUI
+     KC_TAB  ,   SE_Q ,  SE_W  ,  SE_E  ,   SE_R ,   SE_T ,                                        SE_Y,   SE_U ,   SE_I ,   SE_O ,   SE_P , SE_ARNG,
+     KC_ESC  ,   GUI_A,  ALT_S ,  SFT_D ,  CTL_F ,   SE_G ,                                        SE_H,   CTL_J,   SFT_K,   ALT_L, SE_ODIA, SE_ADIA,
+     _______ ,   SE_Z ,  SE_X  ,  SE_C  ,   SE_V ,   SE_B , SE_LBRC, _______, _______, SE_RBRC,    SE_N,   SE_M , SE_COMM, SE_DOT , SE_SLSH, _______,
+                     KEY_OVERRIDE_TOGGLE, TD_CPS , NAV_ENT, NUMBAR ,  NAV   , SYM    ,  KC_SPC,     SYM, KC_RALT, KC_RGUI
     ),
 /*
  * Nav Layer: Media, navigation, F-keys
@@ -145,9 +146,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_SYM] = LAYOUT(
-      KC_GRV ,   KC_1 ,   KC_2 ,   KC_3 ,   KC_4 ,   KC_5 ,                                       KC_6 ,   KC_7 ,   KC_8 ,   KC_9 ,   KC_0 , KC_EQL ,
-     KC_TILD , KC_EXLM,  KC_AT , KC_HASH,  KC_DLR, KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PLUS,
-     KC_PIPE , KC_BSLS, KC_LBRC, KC_RBRC, KC_MINS, _______, _______, _______, _______, _______, _______, KC_UNDS, KC_LCBR, KC_RCBR, KC_SLSH, KC_QUES,
+      SE_GRV ,   SE_1 ,   SE_2 ,   SE_3 ,   SE_4 ,   SE_5 ,                                       SE_6 ,   SE_7 ,   SE_8 ,   SE_9 ,   SE_0 , SE_EQL ,
+     SE_TILD , SE_EXLM,  SE_AT , SE_HASH,  SE_DLR, SE_PERC,                                     SE_CIRC, SE_AMPR, SE_ASTR, SE_LPRN, SE_RPRN, SE_PLUS,
+     SE_PIPE , SE_BSLS, SE_LBRC, SE_RBRC, SE_MINS, _______, _______, _______, _______, _______, _______, SE_UNDS, SE_LCBR, SE_RCBR, SE_SLSH, SE_QUES,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -166,10 +167,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_NUMBAR] = LAYOUT(
-      _______, _______, _______, _______, _______, _______,                                     _______, KC_7,    KC_8,    KC_9, KC_MINS, _______,
-      _______, _______, _______, _______, _______, _______,                                     KC_ASTR, KC_4,    KC_5,    KC_6, KC_PLUS, _______,
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_1,    KC_2,    KC_3, KC_SLSH, _______,
-                                 _______, _______, _______, _______, _______, _______, _______, KC_0   , _______, _______
+      _______, _______, _______, _______, _______, _______,                                     _______, SE_7,    SE_8,    SE_9, SE_MINS, _______,
+      _______, _______, _______, _______, _______, _______,                                     SE_ASTR, SE_4,    SE_5,    SE_6, SE_PLUS, _______,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, SE_1,    SE_2,    SE_3, SE_SLSH, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, SE_0   , _______, _______
     ),
 
 // /*
@@ -193,6 +194,45 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 //     ),
 };
+// }}}
+
+// {{{ key overrides
+// Add key overrides to emulate american layout on swedish keyboard
+// ä and ö are available under ctrl modifier
+const key_override_t adia_key_override = ko_make_basic(MOD_MASK_CTRL, SE_ADIA, SE_ADIA);   // ctrl + ä -> ä
+const key_override_t dquo_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_ADIA, SE_DQUO);  // shift + ä -> "
+const key_override_t quot_key_override = ko_make_basic(0, SE_ADIA, SE_QUOT);               // ä -> '
+
+const key_override_t odia_key_override = ko_make_basic(MOD_MASK_CTRL, SE_ODIA, SE_ODIA);   // ctrl + ö -> ö
+const key_override_t coln_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_ODIA, SE_COLN); // shift + ö -> :
+const key_override_t scln_key_override = ko_make_basic(0, SE_ODIA, SE_SCLN);               // ö -> ;
+
+const key_override_t labk_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_COMM, SE_LABK);  // shift + , -> <
+const key_override_t rabk_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_DOT, SE_RABK);   // shift + . -> >
+const key_override_t ques_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_SLSH, SE_QUES);  // shift + / -> ?
+
+const key_override_t lcbr_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_LBRC, SE_LCBR);  // shift + [ -> {
+const key_override_t rcbr_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_RBRC, SE_RCBR);  // shift + ] -> }
+
+const key_override_t **key_overrides = (const key_override_t *[]) {
+    &adia_key_override,
+    &dquo_key_override,
+    &quot_key_override,
+
+    &odia_key_override,
+    &coln_key_override,
+    &scln_key_override,
+
+    &labk_key_override,
+    &rabk_key_override,
+    &ques_key_override,
+
+    &lcbr_key_override,
+    &rcbr_key_override,
+
+    NULL,
+};
+
 // }}}
 
 // {{{ combos
@@ -255,12 +295,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         case CAPSWORD:
             if (record->event.pressed) {
                 enable_caps_word();
-                enable_xcase_with(KC_UNDS);
+                enable_xcase_with(SE_UNDS);
             }
             return false;
         case SNEKCASE:
             if (record->event.pressed) {
-                enable_xcase_with(KC_UNDS);
+                enable_xcase_with(SE_UNDS);
             }
             return false;
         default:
