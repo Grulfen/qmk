@@ -17,6 +17,7 @@
 
 #include "features/casemodes.h"
 #include "keymap_swedish.h"
+#include "sendstring_swedish.h"
 
 // {{{ tap dances
 enum {
@@ -52,6 +53,9 @@ enum layers {
 enum custom_keycodes {
     CAPSWORD = SAFE_RANGE,
     SNEKCASE,
+    SE_TILDE,
+    SE_GRAVE,
+    SE_HATT,
 };
 
 // Aliases for readability
@@ -146,8 +150,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_SYM] = LAYOUT(
-      SE_GRV ,   SE_1 ,   SE_2 ,   SE_3 ,   SE_4 ,   SE_5 ,                                       SE_6 ,   SE_7 ,   SE_8 ,   SE_9 ,   SE_0 , SE_EQL ,
-     SE_TILD , SE_EXLM,  SE_AT , SE_HASH,  SE_DLR, SE_PERC,                                     SE_CIRC, SE_AMPR, SE_ASTR, SE_LPRN, SE_RPRN, SE_PLUS,
+     SE_GRAVE,   SE_1 ,   SE_2 ,   SE_3 ,   SE_4 ,   SE_5 ,                                       SE_6 ,   SE_7 ,   SE_8 ,   SE_9 ,   SE_0 , SE_EQL ,
+     SE_TILDE, SE_EXLM,  SE_AT , SE_HASH,  SE_DLR, SE_PERC,                                     SE_HATT, SE_AMPR, SE_ASTR, SE_LPRN, SE_RPRN, SE_PLUS,
      SE_PIPE , SE_BSLS, SE_LBRC, SE_RBRC, SE_MINS, _______, _______, _______, _______, _______, _______, SE_UNDS, SE_LCBR, SE_RCBR, SE_SLSH, SE_QUES,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
@@ -303,6 +307,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 enable_xcase_with(SE_UNDS);
             }
             return false;
+        case SE_TILDE:
+            if (record->event.pressed) {
+                SEND_STRING("~ ");
+            }
+            return true;
+        case SE_GRAVE:
+            if (record->event.pressed) {
+                SEND_STRING("` ");
+            }
+            return true;
+        case SE_HATT:
+            if (record->event.pressed) {
+                SEND_STRING("^ ");
+            }
+            return true;
         default:
             return true;
     }
