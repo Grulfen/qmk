@@ -178,7 +178,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 enum combo_events {
   IO_BSPC,
   KL_ENT,
-  SD_ESC,
+  XC_ESC,
   WE_TAB,
   COMBO_LENGTH
 };
@@ -186,13 +186,13 @@ uint16_t COMBO_LEN = COMBO_LENGTH;
 
 const uint16_t PROGMEM io_combo[] = {KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM kl_combo[] = {SFT_K, ALT_L, COMBO_END};
-const uint16_t PROGMEM sd_combo[] = {ALT_S, SFT_D, COMBO_END};
+const uint16_t PROGMEM xc_combo[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM we_combo[] = {KC_W, KC_E, COMBO_END};
 
 combo_t key_combos[] = {
     [IO_BSPC] = COMBO(io_combo, KC_BSPC),
     [KL_ENT] = COMBO(kl_combo, KC_ENT),
-    [SD_ESC] = COMBO(sd_combo, KC_ESC),
+    [XC_ESC] = COMBO(xc_combo, KC_ESC),
     [WE_TAB] = COMBO(we_combo, KC_TAB),
 };
 // }}}
