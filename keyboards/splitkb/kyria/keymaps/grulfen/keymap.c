@@ -16,6 +16,29 @@
 #include QMK_KEYBOARD_H
 
 #include "features/casemodes.h"
+
+// {{{ tap dances
+enum {
+    TD_CAPS
+};
+
+void dance_capsword(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        enable_caps_word();
+        enable_xcase_with(SE_UNDS);
+    } else {
+        enable_xcase_with(SE_UNDS);
+        reset_tap_dance(state);
+    }
+}
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [TD_CAPS] = ACTION_TAP_DANCE_FN(dance_capsword),
+};
+
+#define TD_CPS TD(TD_CAPS)
+// }}}
+
 // {{{ layers
 
 enum layers {
@@ -84,7 +107,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TAB  ,   KC_Q ,  KC_W  ,  KC_E  ,   KC_R ,   KC_T ,                                        KC_Y,   KC_U ,   KC_I ,   KC_O ,   KC_P , KC_LBRC,
      KC_ESC  ,   GUI_A,  ALT_S ,  SFT_D ,  CTL_F ,   KC_G ,                                        KC_H,   CTL_J,   SFT_K,   ALT_L,GUI_SCLN,KC_QUOTE,
      _______ ,   KC_Z ,  KC_X  ,  KC_C  ,   KC_V ,   KC_B , KC_LBRC, _______, _______, KC_RBRC, KC_N   ,   KC_M , KC_COMM, KC_DOT , KC_SLSH, _______,
-                                 _______,CAPSWORD, NAV_ENT, NUMBAR ,  NAV   , SYM    ,  KC_SPC,     SYM, KC_RALT, KC_RGUI
+                                 _______, TD_CPS , NAV_ENT, NUMBAR ,  NAV   , SYM    ,  KC_SPC,     SYM, KC_RALT, KC_RGUI
     ),
 /*
  * Nav Layer: Media, navigation, F-keys
