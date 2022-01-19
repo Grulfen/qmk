@@ -180,6 +180,8 @@ enum combo_events {
   KL_ENT,
   XC_ESC,
   WE_TAB,
+  MCOMMA_MINS,
+  COMMADOT_UNDS,
   COMBO_LENGTH
 };
 uint16_t COMBO_LEN = COMBO_LENGTH;
@@ -188,12 +190,16 @@ const uint16_t PROGMEM io_combo[] = {KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM kl_combo[] = {SFT_K, ALT_L, COMBO_END};
 const uint16_t PROGMEM xc_combo[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM we_combo[] = {KC_W, KC_E, COMBO_END};
+const uint16_t PROGMEM mcomma_combo[] = {KC_M, SE_COMM, COMBO_END};
+const uint16_t PROGMEM commadot_combo[] = {SE_COMM, SE_DOT, COMBO_END};
 
 combo_t key_combos[] = {
     [IO_BSPC] = COMBO(io_combo, KC_BSPC),
     [KL_ENT] = COMBO(kl_combo, KC_ENT),
     [XC_ESC] = COMBO(xc_combo, KC_ESC),
     [WE_TAB] = COMBO(we_combo, KC_TAB),
+    [MCOMMA_MINS] = COMBO(mcomma_combo, SE_MINS),
+    [COMMADOT_UNDS] = COMBO(commadot_combo, SE_UNDS),
 };
 // }}}
 
