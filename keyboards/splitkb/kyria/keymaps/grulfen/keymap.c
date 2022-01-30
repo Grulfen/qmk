@@ -124,7 +124,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
 /*
- * Raise Layer: Functions, Numbers
+ * Numbar
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |        |      |      |      |      |      |                              |      | 7 &  | 8 *  | 9 (  | - _  |        |
