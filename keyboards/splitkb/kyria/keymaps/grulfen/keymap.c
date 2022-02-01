@@ -45,9 +45,11 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 enum layers {
     _QWERTY = 0,
+    _SC2,
     _NAV,
     _SYM,
     _NUMBAR,
+    _SC2_NUM,
 };
 
 enum custom_keycodes {
@@ -60,10 +62,14 @@ enum custom_keycodes {
 
 // Aliases for readability
 #define QWERTY   DF(_QWERTY)
+#define SC2      DF(_SC2)
 
 #define SYM      OSL(_SYM)
 #define NAV      OSL(_NAV)
 #define NUMBAR   MO(_NUMBAR)
+#define SC2_N    MO(_SC2_NUM)
+#define C_SC2_N  LM(_SC2_NUM, MOD_LCTL)
+#define S_SC2_N  LM(_SC2_NUM, MOD_LSFT)
 
 #define CTL_ESC  MT(MOD_LCTL, KC_ESC)
 #define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
@@ -104,7 +110,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * |        |   Z  |   X  |   C  |   V  |   B  | [ {  |      |  |      |  ] } |   N  |   M  | ,  < | . >  | /  ? |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        | SE/US|Caps- |Enter/|Numbar| Nav  |  | Sym  | Space| Sym  | AltGr| RGUI |
+ *                        | SE/US|Caps- |Enter/|Numbar| Nav  |  | Sym  | Space| Sym  | AltGr| SC2  |
  *                        |      |Word  | Nav  |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
@@ -112,7 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TAB  ,   SE_Q ,  SE_W  ,  SE_E  ,   SE_R ,   SE_T ,                                        SE_Y,   SE_U ,   SE_I ,   SE_O ,   SE_P , SE_ARNG,
      KC_ESC  ,   GUI_A,  ALT_S ,  SFT_D ,  CTL_F ,   SE_G ,                                        SE_H,   CTL_J,   SFT_K,   ALT_L, SE_ODIA, SE_ADIA,
      _______ ,   SE_Z ,  SE_X  ,  SE_C  ,   SE_V ,   SE_B , SE_LBRC, _______, _______, SE_RBRC,    SE_N,   SE_M , SE_COMM, SE_DOT , SE_SLSH, _______,
-                     KEY_OVERRIDE_TOGGLE, TD_CPS , NAV_ENT, NUMBAR ,  NAV   , SYM    ,  KC_SPC,     SYM, KC_RALT, KC_RGUI
+                     KEY_OVERRIDE_TOGGLE, TD_CPS , NAV_ENT, NUMBAR ,  NAV   , SYM    ,  KC_SPC,     SYM, KC_RALT, SC2
     ),
 /*
  * Nav Layer: Media, navigation, F-keys
@@ -177,6 +183,47 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  _______, _______, _______, _______, _______, _______, _______, SE_0   , _______, _______
     ),
 
+/*
+ * SC2 Layer: Base layer with easy access to number, shift + number and ctrl + number
+ *            Only left half is intended to be used
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |  Esc   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |   Å    |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |  Tab   |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  |   Ö  |   Ä    |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * | Shift  |   Z  |   X  |   C  |   V  |   B  |   U  |      |  |      |  ] } |   N  |   M  | ,  < | . >  | /  ? |        |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        |      | Shft+| SC2_N| Ctrl+|  F2  |  | Sym  | Space| Sym  | AltGr|Qwerty|
+ *                        |      | SC2_N|      | SC2_N|      |  |      |      |      |      |      |
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [_SC2] = LAYOUT(
+     KC_ESC  ,   SE_Q ,  SE_W  ,  SE_E  ,   SE_R ,   SE_T ,                                        SE_Y,   SE_U ,   SE_I ,   SE_O ,   SE_P , SE_ARNG,
+     KC_TAB  ,   SE_A ,  SE_S  ,  SE_D  ,   SE_F ,   SE_G ,                                        SE_H,   SE_J ,   SE_K ,   SE_L , SE_ODIA, SE_ADIA,
+     KC_LSFT ,   SE_Z ,  SE_X  ,  SE_C  ,   SE_V ,   SE_B ,  SE_U  , _______, _______, SE_RBRC,    SE_N,   SE_M , SE_COMM, SE_DOT , SE_SLSH, _______,
+                                 XXXXXXX, S_SC2_N,  SC2_N , C_SC2_N, KC_F2  , SYM    ,  KC_SPC,     SYM, KC_RALT, QWERTY
+    ),
+/*
+ * SC2 Number
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |        | 6    | 7    | 8    | 9    | 0    |                              |      |      |      |      |      |        |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |        | 1    | 2    | 3    | 4    | 5    |                              |      |      |      |      |      |        |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [_SC2_NUM] = LAYOUT(
+      _______,   SE_6 ,   SE_7 ,   SE_8 ,   SE_9 ,   SE_0 ,                                     _______, _______, _______, _______, _______, _______,
+      _______,   SE_1 ,   SE_2 ,   SE_3 ,   SE_4 ,   SE_5 ,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
 // /*
 //  * Layer template
 //  *
