@@ -99,9 +99,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |  Tab   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |   Å    |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |--------+---~--+---{--+---[--+---(--+------|                              |------+---)--+---]--+---}--+------+--------|
  * |  Esc   |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  |   Ö  |   Ä    |
- * |--------+------+------+------+------+------+------.                ,------+------+------+------+------+------+--------|
+ * |--------+---` -+------+------+------+------+------.                ,------+------+------+------+------+------+--------|
  * |        |   Z  |   X  |   C  |   V  |   B  | [ {  |                |  ] } |   N  |   M  | ,  < | . >  | /  ? |        |
  * `----------------------+------+------+------+------+------.  ,------+------+------+------+------+----------------------'
  *                        |      |Caps- |Enter/|Numbar|      |  |      | Space| Sym  | SE/US|      |
@@ -139,20 +139,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Sym Layer: Numbers and symbols
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |    `   |  1   |  2   |  3   |  4   |  5   |                              |   6  |  7   |  8   |  9   |  0   |   =    |
+ * |        |  1   |  2   |  3   |  4   |  5   |                              |   6  |  7   |  8   |  9   |  0   |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |    ~   |  !   |  @   |  #   |  $   |  %   |                              |   ^  |  &   |  *   |  (   |  )   |   +    |
+ * |        |  !   |  @   |  #   |  $   |  %   |                              |   ^  |  &   |  *   |  =   |  +   |        |
  * |--------+------+------+------+------+------+------.                ,------+------+------+------+------+------+--------|
- * |    |   |   \  |  [   |  ]   |  -   |      |      |                |      |      |  _   |  {   |  }   |      |        |
+ * |        |   \  |  [   |  ]   |  -   |  |   |      |                |      |      |  _   |  {   |  }   |      |        |
  * `----------------------+------+------+------+------+------.  ,------+------+------+------+------+----------------------'
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_SYM] = LAYOUT(
-     SE_GRAVE,   SE_1 ,   SE_2 ,   SE_3 ,   SE_4 ,   SE_5 ,                                       SE_6 ,   SE_7 ,   SE_8 ,   SE_9 ,   SE_0 , SE_EQL ,
-     SE_TILDE, SE_EXLM,  SE_AT , SE_HASH,  SE_DLR, SE_PERC,                                     SE_HATT, SE_AMPR, SE_ASTR, SE_LPRN, SE_RPRN, SE_PLUS,
-     SE_PIPE , SE_BSLS, SE_LBRC, SE_RBRC, SE_MINS, _______, _______,                   _______, _______, SE_UNDS, SE_LCBR, SE_RCBR, _______, _______,
+     SE_GRAVE,   SE_1 ,   SE_2 ,   SE_3 ,   SE_4 ,   SE_5 ,                                       SE_6 ,   SE_7 ,   SE_8 ,   SE_9 ,   SE_0 , _______,
+     SE_TILDE, SE_EXLM,  SE_AT , SE_HASH,  SE_DLR, SE_PERC,                                     SE_HATT, SE_AMPR, SE_ASTR, SE_EQL , SE_PLUS, _______,
+      _______, SE_BSLS, SE_LBRC, SE_RBRC, SE_MINS, SE_PIPE, _______,                   _______, _______, SE_UNDS, SE_LCBR, SE_RCBR, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -208,7 +208,7 @@ const key_override_t dquo_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_ADIA, 
 const key_override_t quot_key_override = ko_make_basic(0, SE_ADIA, SE_QUOT);               // ä -> '
 
 const key_override_t odia_key_override = ko_make_basic(MOD_MASK_CTRL, SE_ODIA, SE_ODIA);   // ctrl + ö -> ö
-const key_override_t coln_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_ODIA, SE_COLN); // shift + ö -> :
+const key_override_t coln_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_ODIA, SE_COLN);  // shift + ö -> :
 const key_override_t scln_key_override = ko_make_basic(0, SE_ODIA, SE_SCLN);               // ö -> ;
 
 const key_override_t labk_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_COMM, SE_LABK);  // shift + , -> <
@@ -217,6 +217,8 @@ const key_override_t ques_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_SLSH, 
 
 const key_override_t lcbr_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_LBRC, SE_LCBR);  // shift + [ -> {
 const key_override_t rcbr_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_RBRC, SE_RCBR);  // shift + ] -> }
+
+const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL); // shift + backspace -> Del
 
 const key_override_t **key_overrides = (const key_override_t *[]) {
     &adia_key_override,
@@ -233,6 +235,8 @@ const key_override_t **key_overrides = (const key_override_t *[]) {
 
     &lcbr_key_override,
     &rcbr_key_override,
+
+    &delete_key_override,
 
     NULL,
 };
@@ -254,6 +258,8 @@ enum combo_events {
   IK_RBRC,
   WS_LCBR,
   OL_RCBR,
+  QA_TILDE,
+  AZ_GRAVE,
   LSEMICOLON_ADIA,
   MCOMMA_MINS,
   COMMADOT_UNDS,
@@ -272,6 +278,8 @@ const uint16_t PROGMEM ed_combo[] = {KC_E, SFT_D, COMBO_END};
 const uint16_t PROGMEM ik_combo[] = {KC_I, SFT_K, COMBO_END};
 const uint16_t PROGMEM ws_combo[] = {KC_W, ALT_S, COMBO_END};
 const uint16_t PROGMEM ol_combo[] = {KC_O, ALT_L, COMBO_END};
+const uint16_t PROGMEM qa_combo[] = {KC_Q, GUI_A, COMBO_END};
+const uint16_t PROGMEM az_combo[] = {GUI_A, KC_Z, COMBO_END};
 const uint16_t PROGMEM lsemicolon_combo[] = {ALT_L, SE_ODIA, COMBO_END};
 const uint16_t PROGMEM mcomma_combo[] = {KC_M, SE_COMM, COMBO_END};
 const uint16_t PROGMEM commadot_combo[] = {SE_COMM, SE_DOT, COMBO_END};
@@ -288,6 +296,8 @@ combo_t key_combos[] = {
     [IK_RBRC] = COMBO(ik_combo, SE_RBRC),
     [WS_LCBR] = COMBO(ws_combo, SE_LCBR),
     [OL_RCBR] = COMBO(ol_combo, SE_RCBR),
+    [QA_TILDE] = COMBO(qa_combo, SE_TILDE),
+    [AZ_GRAVE] = COMBO(az_combo, SE_GRAVE),
     [LSEMICOLON_ADIA] = COMBO(lsemicolon_combo, SE_ADIA),
     [MCOMMA_MINS] = COMBO(mcomma_combo, SE_MINS),
     [COMMADOT_UNDS] = COMBO(commadot_combo, SE_UNDS),
