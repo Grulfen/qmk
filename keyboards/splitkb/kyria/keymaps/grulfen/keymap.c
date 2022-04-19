@@ -265,6 +265,8 @@ const key_override_t ques_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_SLSH, 
 const key_override_t lcbr_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_LBRC, SE_LCBR);  // shift + [ -> {
 const key_override_t rcbr_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_RBRC, SE_RCBR);  // shift + ] -> }
 
+const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL); // shift + backspace -> Del
+
 const key_override_t **key_overrides = (const key_override_t *[]) {
     &adia_key_override,
     &dquo_key_override,
@@ -280,6 +282,8 @@ const key_override_t **key_overrides = (const key_override_t *[]) {
 
     &lcbr_key_override,
     &rcbr_key_override,
+
+    &delete_key_override,
 
     NULL,
 };
