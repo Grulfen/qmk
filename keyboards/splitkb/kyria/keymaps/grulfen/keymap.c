@@ -298,6 +298,16 @@ enum combo_events {
   KL_ENT,
   XC_ESC,
   WE_TAB,
+  OP_ARNG,
+  RF_LPRN,
+  UJ_RPRN,
+  ED_LBRC,
+  IK_RBRC,
+  WS_LCBR,
+  OL_RCBR,
+  QA_TILDE,
+  AZ_GRAVE,
+  LSEMICOLON_ADIA,
   MCOMMA_MINS,
   COMMADOT_UNDS,
   COMBO_LENGTH
@@ -308,6 +318,16 @@ const uint16_t PROGMEM io_combo[] = {KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM kl_combo[] = {SFT_K, ALT_L, COMBO_END};
 const uint16_t PROGMEM xc_combo[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM we_combo[] = {KC_W, KC_E, COMBO_END};
+const uint16_t PROGMEM op_combo[] = {KC_O, KC_P, COMBO_END};
+const uint16_t PROGMEM rf_combo[] = {KC_R, CTL_F, COMBO_END};
+const uint16_t PROGMEM uj_combo[] = {KC_U, CTL_J, COMBO_END};
+const uint16_t PROGMEM ed_combo[] = {KC_E, SFT_D, COMBO_END};
+const uint16_t PROGMEM ik_combo[] = {KC_I, SFT_K, COMBO_END};
+const uint16_t PROGMEM ws_combo[] = {KC_W, ALT_S, COMBO_END};
+const uint16_t PROGMEM ol_combo[] = {KC_O, ALT_L, COMBO_END};
+const uint16_t PROGMEM qa_combo[] = {KC_Q, GUI_A, COMBO_END};
+const uint16_t PROGMEM az_combo[] = {GUI_A, KC_Z, COMBO_END};
+const uint16_t PROGMEM lsemicolon_combo[] = {ALT_L, SE_ODIA, COMBO_END};
 const uint16_t PROGMEM mcomma_combo[] = {KC_M, SE_COMM, COMBO_END};
 const uint16_t PROGMEM commadot_combo[] = {SE_COMM, SE_DOT, COMBO_END};
 
@@ -316,6 +336,16 @@ combo_t key_combos[] = {
     [KL_ENT] = COMBO(kl_combo, KC_ENT),
     [XC_ESC] = COMBO(xc_combo, KC_ESC),
     [WE_TAB] = COMBO(we_combo, KC_TAB),
+    [OP_ARNG] = COMBO(op_combo, SE_ARNG),
+    [RF_LPRN] = COMBO(rf_combo, SE_LPRN),
+    [UJ_RPRN] = COMBO(uj_combo, SE_RPRN),
+    [ED_LBRC] = COMBO(ed_combo, SE_LBRC),
+    [IK_RBRC] = COMBO(ik_combo, SE_RBRC),
+    [WS_LCBR] = COMBO(ws_combo, SE_LCBR),
+    [OL_RCBR] = COMBO(ol_combo, SE_RCBR),
+    [QA_TILDE] = COMBO(qa_combo, SE_TILDE),
+    [AZ_GRAVE] = COMBO(az_combo, SE_GRAVE),
+    [LSEMICOLON_ADIA] = COMBO(lsemicolon_combo, SE_ADIA),
     [MCOMMA_MINS] = COMBO(mcomma_combo, SE_MINS),
     [COMMADOT_UNDS] = COMBO(commadot_combo, SE_UNDS),
 };
