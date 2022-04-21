@@ -48,6 +48,7 @@ enum layers {
     _SC2,
     _NAV,
     _SYM,
+    _NUMBER,
     _NUMBAR,
     _SC2_NUM,
 };
@@ -64,9 +65,10 @@ enum custom_keycodes {
 #define QWERTY   DF(_QWERTY)
 #define SC2      DF(_SC2)
 
-#define SYM      OSL(_SYM)
-#define NAV      OSL(_NAV)
+#define SYM      MO(_SYM)
+#define NAV      MO(_NAV)
 #define NUMBAR   MO(_NUMBAR)
+#define NUMBER   MO(_NUMBER)
 #define SC2_N    MO(_SC2_NUM)
 #define C_SC2_N  LM(_SC2_NUM, MOD_LCTL)
 #define S_SC2_N  LM(_SC2_NUM, MOD_LSFT)
@@ -79,20 +81,10 @@ enum custom_keycodes {
 #define RSFT_SPC MT(MOD_RSFT, KC_SPC)
 #define AGR_BSP  MT(MOD_RALT, KC_BSPC)
 
-// Left-hand home row mods
-#define GUI_A LGUI_T(SE_A)
-#define ALT_S LALT_T(SE_S)
-#define SFT_D LSFT_T(SE_D)
-#define CTL_F LCTL_T(SE_F)
-
-// Right-hand home row mods
-#define CTL_J RCTL_T(SE_J)
-#define SFT_K RSFT_T(SE_K)
-#define ALT_L LALT_T(SE_L)
-#define GUI_ODIA RGUI_T(SE_ODIA)
-
-#define NAV_ENT  LT(_NAV, KC_ENT)
-#define SYM_BSP  LT(_SYM, KC_BSPC)
+#define OS_CTL OSM(MOD_LCTL)
+#define OS_SFT OSM(MOD_LSFT)
+#define OS_ALT OSM(MOD_LALT)
+#define OS_GUI OSM(MOD_LGUI)
 
 // Note: LAlt/Enter (ALT_ENT) is not the same thing as the keyboard shortcut Alt+Enter.
 // The notation `mod/tap` denotes a key that activates the modifier `mod` when held down, and
@@ -108,57 +100,77 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |  Esc   |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  |   Ö  |   Ä    |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |   Z  |   X  |   C  |   V  |   B  | [ {  |      |  |      |  ] } |   N  |   M  | ,  < | . >  | /  ? |        |
+ * |        |   Z  |   X  |   C  |   V  |   B  |      |      |  |      |      |   N  |   M  | ,  < | . >  | /  ? |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        | SE/US|Caps- |Enter/|Numbar| Nav  |  | Sym  | Space| Sym  | AltGr| SC2  |
- *                        |      |Word  | Nav  |      |      |  |      |      |      |      |      |
+ *                        | SE/US|Caps- | Nav  |Numbar|      |  |      | Space| Sym  | AltGr| SC2  |
+ *                        |      |Word  |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
      KC_TAB  ,   SE_Q ,  SE_W  ,  SE_E  ,   SE_R ,   SE_T ,                                        SE_Y,   SE_U ,   SE_I ,   SE_O ,   SE_P , SE_ARNG,
-     KC_ESC  ,   GUI_A,  ALT_S ,  SFT_D ,  CTL_F ,   SE_G ,                                        SE_H,   CTL_J,   SFT_K,   ALT_L, SE_ODIA, SE_ADIA,
-     _______ ,   SE_Z ,  SE_X  ,  SE_C  ,   SE_V ,   SE_B , SE_LBRC, _______, _______, SE_RBRC,    SE_N,   SE_M , SE_COMM, SE_DOT , SE_SLSH, _______,
-                     KEY_OVERRIDE_TOGGLE, TD_CPS , NAV_ENT, NUMBAR ,  NAV   , SYM    ,  KC_SPC,     SYM, KC_RALT, SC2
+     KC_ESC  ,   SE_A ,  SE_S  ,  SE_D  ,   SE_F ,   SE_G ,                                        SE_H,   SE_J ,   SE_K ,   SE_L , SE_ODIA, SE_ADIA,
+     _______ ,   SE_Z ,  SE_X  ,  SE_C  ,   SE_V ,   SE_B , _______, _______, _______, _______,    SE_N,   SE_M , SE_COMM, SE_DOT , SE_SLSH, _______,
+                     KEY_OVERRIDE_TOGGLE, TD_CPS ,   NAV  , NUMBAR, _______, _______,  KC_SPC,     SYM, KC_RALT, SC2
     ),
 /*
  * Nav Layer: Media, navigation, F-keys
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |  F9  | F10  | F11  | F12  |      |                              | PgDn | PgUp | Home | End  | VolUp| Delete |
+ * |        |      |      |      |      |      |                              | PgDn | PgUp | Home | End  | VolUp| Delete |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |  F5  |  F6  |  F7  |  F8  |Ctrl-b|                              |  ←   |  ↓   |  ↑   |   →  | VolDn| Insert |
+ * |        |  gui | alt  | shft | ctrl |Ctrl-b|                              |  ←   |  ↓   |  ↑   |   →  | VolDn| Insert |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |  F1  |  F2  |  F3  |  F4  |      |      |      |  |      |      | Pause|M Prev|M Play|M Next|VolMut| PrtSc  |
+ * |        |      |      |      |      |      |      |      |  |      |      | Pause|M Prev|M Play|M Next|VolMut| PrtSc  |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      |      |      |  |      |      | Bspc |      |      |
+ *                        |      |      |      |      |      |  |      |      |Number|      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_NAV] = LAYOUT(
-      _______,  KC_F9 ,  KC_F10,  KC_F11,  KC_F12, _______,                                     KC_PGDN, KC_PGUP, KC_HOME, KC_END,  KC_VOLU, KC_DEL ,
-      _______,  KC_F5 ,  KC_F6 ,  KC_F7 ,  KC_F8 , C(KC_B),                                     KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_VOLD, KC_INS ,
-      _______,  KC_F1 ,  KC_F2 ,  KC_F3 ,  KC_F4 , _______, _______, _______, _______, _______,KC_PAUSE, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_PSCR,
-                                 _______, _______, _______, _______, _______, _______, _______, KC_BSPC, _______, _______
+      _______, _______, _______, _______, _______, _______,                                     KC_PGDN, KC_PGUP, KC_HOME, KC_END,  KC_VOLU, KC_DEL ,
+      _______, OS_GUI , OS_ALT , OS_SFT , OS_CTL , C(KC_B),                                     KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_VOLD, KC_INS ,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,KC_PAUSE, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_PSCR,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
-
 /*
- * Sym Layer: Numbers and symbols
+ * Sym Layer: Symbols
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |    `   |  1   |  2   |  3   |  4   |  5   |                              |   6  |  7   |  8   |  9   |  0   |   =    |
+ * |        | esc  |  {   |  [   |  (   |  ~   |                              |   ^  |   )  |  ]   |  }   |  `   |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |    ~   |  !   |  @   |  #   |  $   |  %   |                              |   ^  |  &   |  *   |  (   |  )   |   +    |
+ * |        |  -   |  *   |  =   |  _   |  $   |                              |   #  | ctrl | shft |  alt |  gui |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |    |   |   \  |  [   |  ]   |  -   |      |      |      |  |      |      |      |  _   |  {   |  }   |      |        |
+ * |        |  +   |  |   |  @   |  /   |  %   |      |      |  |      |      |      |  \   |  &   |  ?   |   !  |        |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        |      |      |Number|      |      |  |      |      |      |      |      |
+ *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [_SYM] = LAYOUT(
+     _______ , KC_ESC , SE_LCBR, SE_LBRC, SE_LPRN,SE_TILDE,                                     SE_HATT, SE_RPRN, SE_RBRC, SE_RCBR,SE_GRAVE, _______,
+     _______ , SE_MINS, SE_ASTR, SE_EQL , SE_UNDS, SE_DLR ,                                     SE_HASH, OS_CTL , OS_SFT , OS_ALT , OS_GUI , _______,
+     _______ , SE_PLUS, SE_PIPE, SE_AT  , SE_SLSH, SE_PERC, _______, _______, _______, _______, _______, SE_BSLS, SE_AMPR, SE_QUES, SE_EXLM, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+   ),
+
+/*
+ * Num Layer: Numbers
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |        |  1   |  2   |  3   |  4   |  5   |                              |   6  |   7  |   8  |   9  |   0  |        |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |        | gui  | alt  | shft | ctrl | F11  |                              |  F12 | ctrl | shft |  alt |  gui |        |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |      |  |      |      |  F6  |  F7  |  F8  |  F9  |  F10 |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
-    [_SYM] = LAYOUT(
-     SE_GRAVE,   SE_1 ,   SE_2 ,   SE_3 ,   SE_4 ,   SE_5 ,                                       SE_6 ,   SE_7 ,   SE_8 ,   SE_9 ,   SE_0 , SE_EQL ,
-     SE_TILDE, SE_EXLM,  SE_AT , SE_HASH,  SE_DLR, SE_PERC,                                     SE_HATT, SE_AMPR, SE_ASTR, SE_LPRN, SE_RPRN, SE_PLUS,
-     SE_PIPE , SE_BSLS, SE_LBRC, SE_RBRC, SE_MINS, _______, _______, _______, _______, _______, _______, SE_UNDS, SE_LCBR, SE_RCBR, _______, _______,
+    [_NUMBER] = LAYOUT(
+      _______,  SE_1  ,  SE_2  ,  SE_3  ,  SE_4  ,  SE_5  ,                                      SE_6  ,  SE_7  ,  SE_8  ,  SE_9  ,  SE_0  , _______,
+      _______, OS_GUI , OS_ALT , OS_SFT , OS_CTL , KC_F11 ,                                     KC_F12 , OS_CTL , OS_SFT , OS_ALT , OS_GUI , _______,
+      _______,  KC_F1 ,  KC_F2 ,  KC_F3 ,  KC_F4 , KC_F5  , _______, _______, _______, _______,  KC_F6 ,  KC_F7 ,  KC_F8 ,  KC_F9 , KC_F10 , _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -166,20 +178,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Numbar
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      |      |      |      |      |                              |      | 7 &  | 8 *  | 9 (  | - _  |        |
+ * |        |      |  F7  |  F8  |  F9  | F12  |                              |      | 7 &  | 8 *  | 9 (  | - _  |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |                              |  *   | 4 $  | 5 %  | 6 ^  | = +  |        |
+ * |        |      |  F4  |  F5  |  F6  | F11  |                              |  *   | 4 $  | 5 %  | 6 ^  | = +  |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |      |  |      |      |      | 1 !  | 2 @  | 3 #  |  /   |        |
+ * |        |      |  F1  |  F2  |  F3  | F10  |      |      |  |      |      |      | 1 !  | 2 @  | 3 #  |  /   |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |      |      |      |      |      |  |      |      | 0 )  |      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_NUMBAR] = LAYOUT(
-      _______, _______, _______, _______, _______, _______,                                     _______, SE_7,    SE_8,    SE_9, SE_MINS, _______,
-      _______, _______, _______, _______, _______, _______,                                     SE_ASTR, SE_4,    SE_5,    SE_6, SE_PLUS, _______,
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, SE_1,    SE_2,    SE_3, SE_SLSH, _______,
+      _______, _______,  KC_F7 ,  KC_F8 ,  KC_F9 , KC_F12 ,                                     _______, SE_7,    SE_8,    SE_9, SE_MINS, _______,
+      _______, _______,  KC_F4 ,  KC_F5 ,  KC_F6 , KC_F11 ,                                     SE_ASTR, SE_4,    SE_5,    SE_6, SE_PLUS, _______,
+      _______, _______,  KC_F1 ,  KC_F2 ,  KC_F3 , KC_F10 , _______, _______, _______, _______, _______, SE_1,    SE_2,    SE_3, SE_SLSH, _______,
                                  _______, _______, _______, _______, _______, _______, _______, SE_0   , _______, _______
     ),
 
@@ -245,6 +257,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 //     ),
 };
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    return update_tri_layer_state(state, _SYM, _NAV, _NUMBER);
+}
 // }}}
 
 // {{{ key overrides
@@ -260,10 +276,6 @@ const key_override_t scln_key_override = ko_make_basic(0, SE_ODIA, SE_SCLN);    
 
 const key_override_t labk_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_COMM, SE_LABK);  // shift + , -> <
 const key_override_t rabk_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_DOT, SE_RABK);   // shift + . -> >
-const key_override_t ques_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_SLSH, SE_QUES);  // shift + / -> ?
-
-const key_override_t lcbr_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_LBRC, SE_LCBR);  // shift + [ -> {
-const key_override_t rcbr_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_RBRC, SE_RCBR);  // shift + ] -> }
 
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL); // shift + backspace -> Del
 
@@ -278,10 +290,6 @@ const key_override_t **key_overrides = (const key_override_t *[]) {
 
     &labk_key_override,
     &rabk_key_override,
-    &ques_key_override,
-
-    &lcbr_key_override,
-    &rcbr_key_override,
 
     &delete_key_override,
 
@@ -291,8 +299,7 @@ const key_override_t **key_overrides = (const key_override_t *[]) {
 // }}}
 
 // {{{ combos
-//
-//
+
 enum combo_events {
   IO_BSPC,
   KL_ENT,
@@ -315,19 +322,19 @@ enum combo_events {
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 const uint16_t PROGMEM io_combo[] = {KC_I, KC_O, COMBO_END};
-const uint16_t PROGMEM kl_combo[] = {SFT_K, ALT_L, COMBO_END};
+const uint16_t PROGMEM kl_combo[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM xc_combo[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM we_combo[] = {KC_W, KC_E, COMBO_END};
 const uint16_t PROGMEM op_combo[] = {KC_O, KC_P, COMBO_END};
-const uint16_t PROGMEM rf_combo[] = {KC_R, CTL_F, COMBO_END};
-const uint16_t PROGMEM uj_combo[] = {KC_U, CTL_J, COMBO_END};
-const uint16_t PROGMEM ed_combo[] = {KC_E, SFT_D, COMBO_END};
-const uint16_t PROGMEM ik_combo[] = {KC_I, SFT_K, COMBO_END};
-const uint16_t PROGMEM ws_combo[] = {KC_W, ALT_S, COMBO_END};
-const uint16_t PROGMEM ol_combo[] = {KC_O, ALT_L, COMBO_END};
-const uint16_t PROGMEM qa_combo[] = {KC_Q, GUI_A, COMBO_END};
-const uint16_t PROGMEM az_combo[] = {GUI_A, KC_Z, COMBO_END};
-const uint16_t PROGMEM lsemicolon_combo[] = {ALT_L, SE_ODIA, COMBO_END};
+const uint16_t PROGMEM rf_combo[] = {KC_R, KC_F, COMBO_END};
+const uint16_t PROGMEM uj_combo[] = {KC_U, KC_J, COMBO_END};
+const uint16_t PROGMEM ed_combo[] = {KC_E, KC_D, COMBO_END};
+const uint16_t PROGMEM ik_combo[] = {KC_I, KC_K, COMBO_END};
+const uint16_t PROGMEM ws_combo[] = {KC_W, KC_S, COMBO_END};
+const uint16_t PROGMEM ol_combo[] = {KC_O, KC_L, COMBO_END};
+const uint16_t PROGMEM qa_combo[] = {KC_Q, KC_A, COMBO_END};
+const uint16_t PROGMEM az_combo[] = {KC_A, KC_Z, COMBO_END};
+const uint16_t PROGMEM lsemicolon_combo[] = {KC_L, SE_ODIA, COMBO_END};
 const uint16_t PROGMEM mcomma_combo[] = {KC_M, SE_COMM, COMBO_END};
 const uint16_t PROGMEM commadot_combo[] = {SE_COMM, SE_DOT, COMBO_END};
 
