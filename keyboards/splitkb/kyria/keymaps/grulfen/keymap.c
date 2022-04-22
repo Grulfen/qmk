@@ -16,6 +16,7 @@
 #include QMK_KEYBOARD_H
 
 #include "features/casemodes.h"
+#include "features/oneshot.h"
 #include "keymap_swedish.h"
 #include "sendstring_swedish.h"
 
@@ -59,6 +60,10 @@ enum custom_keycodes {
     SE_TILDE,
     SE_GRAVE,
     SE_HATT,
+    OS_CTL,
+    OS_SFT,
+    OS_ALT,
+    OS_GUI,
 };
 
 // Aliases for readability
@@ -80,15 +85,6 @@ enum custom_keycodes {
 #define SFT_SPC  MT(MOD_LSFT, KC_SPC)
 #define RSFT_SPC MT(MOD_RSFT, KC_SPC)
 #define AGR_BSP  MT(MOD_RALT, KC_BSPC)
-
-#define OS_CTL OSM(MOD_LCTL)
-#define OS_SFT OSM(MOD_LSFT)
-#define OS_ALT OSM(MOD_LALT)
-#define OS_GUI OSM(MOD_LGUI)
-
-// Note: LAlt/Enter (ALT_ENT) is not the same thing as the keyboard shortcut Alt+Enter.
-// The notation `mod/tap` denotes a key that activates the modifier `mod` when held down, and
-// produces the key `tap` when tapped (i.e. pressed and released).
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -378,10 +374,58 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 // }}}
 
 // {{{ process_record_user
+
+bool is_oneshot_cancel_key(uint16_t keycode) {
+    switch (keycode) {
+    case SYM:
+    case NAV:
+        return true;
+    default:
+        return false;
+    }
+}
+
+bool is_oneshot_ignored_key(uint16_t keycode) {
+    switch (keycode) {
+    case SYM:
+    case NAV:
+    case OS_SFT:
+    case OS_CTL:
+    case OS_ALT:
+    case OS_GUI:
+        return true;
+    default:
+        return false;
+    }
+}
+
+oneshot_state os_shft_state = os_up_unqueued;
+oneshot_state os_ctrl_state = os_up_unqueued;
+oneshot_state os_alt_state = os_up_unqueued;
+oneshot_state os_cmd_state = os_up_unqueued;
+
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     if (!process_case_modes(keycode, record)) {
         return false;
     }
+
+    update_oneshot(
+        &os_shft_state, KC_LSFT, OS_SFT,
+        keycode, record
+    );
+    update_oneshot(
+        &os_ctrl_state, KC_LCTL, OS_CTL,
+        keycode, record
+    );
+    update_oneshot(
+        &os_alt_state, KC_LALT, OS_ALT,
+        keycode, record
+    );
+    update_oneshot(
+        &os_cmd_state, KC_LGUI, OS_GUI,
+        keycode, record
+    );
+
     // Regular user keycode case statement
     switch (keycode) {
         case CAPSWORD:
