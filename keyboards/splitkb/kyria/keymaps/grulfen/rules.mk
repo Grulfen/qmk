@@ -8,3 +8,4 @@ TAP_DANCE_ENABLE = yes
 KEY_OVERRIDE_ENABLE = yes
 
 SRC += features/casemodes.c
+SRC += features/oneshot.c
