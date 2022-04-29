@@ -131,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |        |  -   |  *   |  =   |  _   |  $   |                              |   #  | ctrl | shft |  alt |  gui |        |
  * |--------+------+------+------+------+------+------.                ,------+------+------+------+------+------+--------|
  * |        |  +   |  |   |  @   |  /   |  %   |      |                |      |      |  \   |  &   |  ?   |   !  |        |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ * `----------------------+------+------+------+------+------.  ,------+------+------+------+------+----------------------'
  *                        |      |      |Number|      |      |  |      |      |      |      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
@@ -345,20 +345,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     }
 
     update_oneshot(
-        &os_shft_state, KC_LSFT, OS_SFT,
-        keycode, record
+        &os_shft_state, KC_LSFT, OS_SFT, keycode, record
     );
     update_oneshot(
-        &os_ctrl_state, KC_LCTL, OS_CTL,
-        keycode, record
+        &os_ctrl_state, KC_LCTL, OS_CTL, keycode, record
     );
     update_oneshot(
-        &os_alt_state, KC_LALT, OS_ALT,
-        keycode, record
+        &os_alt_state, KC_LALT, OS_ALT, keycode, record
     );
     update_oneshot(
-        &os_cmd_state, KC_LGUI, OS_GUI,
-        keycode, record
+        &os_cmd_state, KC_LGUI, OS_GUI,keycode, record
     );
 
     // Regular user keycode case statement
