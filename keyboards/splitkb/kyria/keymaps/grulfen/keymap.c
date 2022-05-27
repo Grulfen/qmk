@@ -441,17 +441,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             return false;
         case SE_TILDE:
             if (record->event.pressed) {
-                SEND_STRING("~ ");
+                SEND_STRING("~");
             }
             return true;
         case SE_GRAVE:
             if (record->event.pressed) {
-                SEND_STRING("` ");
+                SEND_STRING("`");
             }
             return true;
         case SE_HATT:
             if (record->event.pressed) {
-                SEND_STRING("^ ");
+                SEND_STRING("^");
             }
             return true;
         default:
