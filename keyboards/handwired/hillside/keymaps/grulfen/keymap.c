@@ -221,7 +221,7 @@ const key_override_t dquo_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_ADIA, 
 const key_override_t quot_key_override = ko_make_basic(0, SE_ADIA, SE_QUOT);               // ä -> '
 
 const key_override_t odia_key_override = ko_make_basic(MOD_MASK_CTRL, SE_ODIA, SE_ODIA);   // ctrl + ö -> ö
-const key_override_t coln_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_ODIA, SE_COLN); // shift + ö -> :
+const key_override_t coln_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_ODIA, SE_COLN);  // shift + ö -> :
 const key_override_t scln_key_override = ko_make_basic(0, SE_ODIA, SE_SCLN);               // ö -> ;
 
 const key_override_t labk_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_COMM, SE_LABK);  // shift + , -> <
