@@ -17,6 +17,7 @@
 
 #include "features/casemodes.h"
 #include "features/oneshot.h"
+#include "features/swapper.h"
 #include "keymap_swedish.h"
 #include "sendstring_swedish.h"
 
@@ -62,6 +63,8 @@ enum custom_keycodes {
     OS_SFT,
     OS_ALT,
     OS_GUI,
+    ALT_TAB,
+    SA_TAB,
 };
 
 // Aliases for readability
@@ -106,7 +109,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Nav Layer: Media, navigation, F-keys
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |  tab |      |      |      |      |                              | PgDn | PgUp | Home | End  | VolUp| Delete |
+ * |        |  tab |alttab|      |      |      |                              | PgDn | PgUp | Home | End  | VolUp| Delete |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |  gui | alt  | shft | ctrl |Ctrl-b|                              |  ←   |  ↓   |  ↑   |   →  | VolDn| Insert |
  * |--------+------+------+------+------+------+------.                ,------+------+------+------+------+------+--------|
@@ -117,7 +120,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_NAV] = LAYOUT(
-      _______, KC_TAB , _______, _______, _______, _______,                                     KC_PGDN, KC_PGUP, KC_HOME, KC_END,  KC_VOLU, KC_DEL ,
+      _______, KC_TAB , ALT_TAB, SA_TAB , _______, _______,                                     KC_PGDN, KC_PGUP, KC_HOME, KC_END,  KC_VOLU, KC_DEL ,
       _______, OS_GUI , OS_ALT , OS_SFT , OS_CTL , C(KC_B),                                     KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_VOLD, KC_INS ,
       _______, _______, _______, _______, _______, _______, _______,                   _______,KC_PAUSE, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_PSCR,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -341,6 +344,8 @@ oneshot_state os_ctrl_state = os_up_unqueued;
 oneshot_state os_alt_state = os_up_unqueued;
 oneshot_state os_cmd_state = os_up_unqueued;
 
+bool sw_win_active = false;
+
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     if (!process_case_modes(keycode, record)) {
         return false;
@@ -358,6 +363,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     update_oneshot(
         &os_cmd_state, KC_LGUI, OS_GUI,keycode, record
     );
+
+    update_swapper(&sw_win_active, KC_LALT, KC_TAB, KC_LSFT, ALT_TAB, SA_TAB, keycode, record);
 
     // Regular user keycode case statement
     switch (keycode) {
