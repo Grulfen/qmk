@@ -130,7 +130,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |  -   |  *   |  =   |  _   |  $   |                              |   #  | ctrl | shft |  alt |  gui |        |
  * |--------+------+------+------+------+------+------.                ,------+------+------+------+------+------+--------|
- * |        |  +   |  |   |  @   |  /   |  %   |      |                |      |      |  \   |  &   |  ?   |   !  |        |
+ * |        |  +   |  |   |  @   |  /   |  %   |      |                |      |   '  |  \   |  &   |  ?   |   !  |        |
  * `----------------------+------+------+------+------+------.  ,------+------+------+------+------+----------------------'
  *                        |      |      |Number|      |      |  |      |      |      |      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
@@ -139,7 +139,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_SYM] = LAYOUT(
      _______ , KC_ESC , SE_LCBR, SE_LBRC, SE_LPRN,SE_TILDE,                                     SE_HATT, SE_RPRN, SE_RBRC, SE_RCBR,SE_GRAVE, _______,
      _______ , SE_MINS, SE_ASTR, SE_EQL , SE_UNDS, SE_DLR ,                                     SE_HASH, OS_CTL , OS_SFT , OS_ALT , OS_GUI , _______,
-     _______ , SE_PLUS, SE_PIPE, SE_AT  , SE_SLSH, SE_PERC, _______,                   _______, _______, SE_BSLS, SE_AMPR, SE_QUES, SE_EXLM, _______,
+     _______ , SE_PLUS, SE_PIPE, SE_AT  , SE_SLSH, SE_PERC, _______,                   _______, SE_QUOT, SE_BSLS, SE_AMPR, SE_QUES, SE_EXLM, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
    ),
 
@@ -226,6 +226,7 @@ const key_override_t scln_key_override = ko_make_basic(0, SE_ODIA, SE_SCLN);    
 
 const key_override_t labk_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_COMM, SE_LABK);  // shift + , -> <
 const key_override_t rabk_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_DOT, SE_RABK);   // shift + . -> >
+const key_override_t squo_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_QUOT, SE_DQUO);  // shift + ' -> "
 
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL); // shift + backspace -> Del
 
@@ -240,6 +241,7 @@ const key_override_t **key_overrides = (const key_override_t *[]) {
 
     &labk_key_override,
     &rabk_key_override,
+    &squo_key_override,
 
     &delete_key_override,
 
