@@ -30,8 +30,11 @@ void dance_capsword(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         enable_caps_word();
         enable_xcase_with(SE_UNDS);
-    } else {
+    } else if (state->count == 2) {
         enable_xcase_with(SE_UNDS);
+    } else {
+        set_oneshot_mods(MOD_LSFT);
+        enable_xcase_with(OSM(MOD_LSFT));
         reset_tap_dance(state);
     }
 }
