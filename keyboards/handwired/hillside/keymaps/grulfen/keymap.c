@@ -113,7 +113,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |  gui | alt  | shft | ctrl |Ctrl-b|                              |  ←   |  ↓   |  ↑   |   →  | VolDn|        |
  * |--------+------+------+------+------+------+------.                ,------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |                |      | Pause|M Prev|M Play|M Next|VolMut|        |
+ * |        |PrtSc |      |      |      |      |      |                |      | Pause|M Prev|M Play|M Next|VolMut|        |
  * `----------------------+------+------+------+------+------.  ,------+------+------+------+------+----------------------'
  *                        |      |      |      |      |      |  |      |      |Number|      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
@@ -122,7 +122,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_NAV] = LAYOUT(
       _______, KC_TAB , ALT_TAB, SA_TAB , _______, _______,                                     KC_PGDN, KC_PGUP, KC_HOME, KC_END,  KC_VOLU, _______,
       _______, OS_GUI , OS_ALT , OS_SFT , OS_CTL , C(KC_B),                                     KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_VOLD, _______,
-      _______, _______, _______, _______, _______, _______, _______,                   _______,KC_PAUSE, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, _______,
+      _______, KC_PSCR, _______, _______, _______, _______, _______,                   _______,KC_PAUSE, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 /*
