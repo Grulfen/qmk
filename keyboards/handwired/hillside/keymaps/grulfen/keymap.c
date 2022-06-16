@@ -236,8 +236,6 @@ enum combo_events {
   XC_ESC,
   WE_TAB,
   OP_ARNG,
-  QA_TILDE,
-  AZ_GRAVE,
   KSEMICOLON_ODIA,
   LSEMICOLON_ADIA,
   MCOMMA_MINS,
@@ -251,8 +249,6 @@ const uint16_t PROGMEM kl_combo[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM xc_combo[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM we_combo[] = {KC_W, KC_E, COMBO_END};
 const uint16_t PROGMEM op_combo[] = {KC_O, KC_P, COMBO_END};
-const uint16_t PROGMEM qa_combo[] = {KC_Q, KC_A, COMBO_END};
-const uint16_t PROGMEM az_combo[] = {KC_A, KC_Z, COMBO_END};
 const uint16_t PROGMEM ksemicolon_combo[] = {KC_K, SE_SCLN, COMBO_END};
 const uint16_t PROGMEM lsemicolon_combo[] = {KC_L, SE_SCLN, COMBO_END};
 const uint16_t PROGMEM mcomma_combo[] = {KC_M, SE_COMM, COMBO_END};
@@ -264,8 +260,6 @@ combo_t key_combos[] = {
     [XC_ESC] = COMBO(xc_combo, KC_ESC),
     [WE_TAB] = COMBO(we_combo, KC_TAB),
     [OP_ARNG] = COMBO(op_combo, SE_ARNG),
-    [QA_TILDE] = COMBO(qa_combo, SE_TILDE),
-    [AZ_GRAVE] = COMBO(az_combo, SE_GRAVE),
     [KSEMICOLON_ODIA] = COMBO(ksemicolon_combo, SE_ODIA),
     [LSEMICOLON_ADIA] = COMBO(lsemicolon_combo, SE_ADIA),
     [MCOMMA_MINS] = COMBO(mcomma_combo, SE_MINS),
