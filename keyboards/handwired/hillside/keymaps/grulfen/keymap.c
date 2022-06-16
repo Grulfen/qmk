@@ -91,7 +91,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |  Tab   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |   Å    |
  * |--------+---~--+---{--+---[--+---(--+------|                              |------+---)--+---]--+---}--+------+--------|
- * |  Esc   |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  |   Ö  |   Ä    |
+ * |  Esc   |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  |   ;  |   Ä    |
  * |--------+------+------+------+------+------+------.                ,------+------+------+------+------+------+--------|
  * |        |   Z  |   X  |   C  |   V  |   B  |      |                |      |   N  |   M  | ,  < | . >  | /  ? |        |
  * `----------------------+------+------+------+------+------.  ,------+------+------+------+------+----------------------'
@@ -101,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
     [_QWERTY] = LAYOUT(
      KC_TAB  ,   SE_Q ,  SE_W  ,  SE_E  ,   SE_R ,   SE_T ,                                        SE_Y,   SE_U ,   SE_I ,   SE_O ,   SE_P , SE_ARNG,
-     KC_ESC  ,   SE_A ,  SE_S  ,  SE_D  ,   SE_F ,   SE_G ,                                        SE_H,   SE_J ,   SE_K ,   SE_L , SE_ODIA, SE_ADIA,
+     KC_ESC  ,   SE_A ,  SE_S  ,  SE_D  ,   SE_F ,   SE_G ,                                        SE_H,   SE_J ,   SE_K ,   SE_L , SE_SCLN, SE_ADIA,
      _______ ,   SE_Z ,  SE_X  ,  SE_C  ,   SE_V ,   SE_B , _______,                   _______,    SE_N,   SE_M , SE_COMM, SE_DOT , SE_SLSH, _______,
                                 _______ , TD_CPS ,   NAV  , NUMBAR , _______, _______,  KC_SPC,     SYM, KEY_OVERRIDE_TOGGLE, _______
     ),
@@ -218,15 +218,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 // {{{ key overrides
 // Add key overrides to emulate american layout on swedish keyboard
-// ä and ö are available under ctrl modifier
-const key_override_t adia_key_override = ko_make_basic(MOD_MASK_CTRL, SE_ADIA, SE_ADIA);   // ctrl + ä -> ä
-const key_override_t dquo_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_ADIA, SE_DQUO);  // shift + ä -> "
-const key_override_t quot_key_override = ko_make_basic(0, SE_ADIA, SE_QUOT);               // ä -> '
-
-const key_override_t odia_key_override = ko_make_basic(MOD_MASK_CTRL, SE_ODIA, SE_ODIA);   // ctrl + ö -> ö
-const key_override_t coln_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_ODIA, SE_COLN);  // shift + ö -> :
-const key_override_t scln_key_override = ko_make_basic(0, SE_ODIA, SE_SCLN);               // ö -> ;
-
+const key_override_t coln_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_SCLN, SE_COLN);  // shift + ; -> :
 const key_override_t labk_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_COMM, SE_LABK);  // shift + , -> <
 const key_override_t rabk_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_DOT, SE_RABK);   // shift + . -> >
 const key_override_t squo_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_QUOT, SE_DQUO);  // shift + ' -> "
@@ -234,14 +226,7 @@ const key_override_t squo_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_QUOT, 
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL); // shift + backspace -> Del
 
 const key_override_t **key_overrides = (const key_override_t *[]) {
-    &adia_key_override,
-    &dquo_key_override,
-    &quot_key_override,
-
-    &odia_key_override,
     &coln_key_override,
-    &scln_key_override,
-
     &labk_key_override,
     &rabk_key_override,
     &squo_key_override,
@@ -269,6 +254,7 @@ enum combo_events {
   OL_RCBR,
   QA_TILDE,
   AZ_GRAVE,
+  KSEMICOLON_ODIA,
   LSEMICOLON_ADIA,
   MCOMMA_MINS,
   COMMADOT_UNDS,
@@ -289,7 +275,8 @@ const uint16_t PROGMEM ws_combo[] = {KC_W, KC_S, COMBO_END};
 const uint16_t PROGMEM ol_combo[] = {KC_O, KC_L, COMBO_END};
 const uint16_t PROGMEM qa_combo[] = {KC_Q, KC_A, COMBO_END};
 const uint16_t PROGMEM az_combo[] = {KC_A, KC_Z, COMBO_END};
-const uint16_t PROGMEM lsemicolon_combo[] = {KC_L, SE_ODIA, COMBO_END};
+const uint16_t PROGMEM ksemicolon_combo[] = {KC_K, SE_SCLN, COMBO_END};
+const uint16_t PROGMEM lsemicolon_combo[] = {KC_L, SE_SCLN, COMBO_END};
 const uint16_t PROGMEM mcomma_combo[] = {KC_M, SE_COMM, COMBO_END};
 const uint16_t PROGMEM commadot_combo[] = {SE_COMM, SE_DOT, COMBO_END};
 
@@ -307,6 +294,7 @@ combo_t key_combos[] = {
     [OL_RCBR] = COMBO(ol_combo, SE_RCBR),
     [QA_TILDE] = COMBO(qa_combo, SE_TILDE),
     [AZ_GRAVE] = COMBO(az_combo, SE_GRAVE),
+    [KSEMICOLON_ODIA] = COMBO(ksemicolon_combo, SE_ODIA),
     [LSEMICOLON_ADIA] = COMBO(lsemicolon_combo, SE_ADIA),
     [MCOMMA_MINS] = COMBO(mcomma_combo, SE_MINS),
     [COMMADOT_UNDS] = COMBO(commadot_combo, SE_UNDS),
