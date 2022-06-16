@@ -54,9 +54,7 @@ enum layers {
 };
 
 enum custom_keycodes {
-    CAPSWORD = SAFE_RANGE,
-    SNEKCASE,
-    SE_TILDE,
+    SE_TILDE = SAFE_RANGE,
     SE_GRAVE,
     SE_HATT,
     OS_CTL,
@@ -74,14 +72,6 @@ enum custom_keycodes {
 #define NAV      MO(_NAV)
 #define NUMBAR   MO(_NUMBAR)
 #define NUMBER   MO(_NUMBER)
-
-#define CTL_ESC  MT(MOD_LCTL, KC_ESC)
-#define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
-#define CTL_MINS MT(MOD_RCTL, KC_MINUS)
-#define ALT_ENT  MT(MOD_LALT, KC_ENT)
-#define SFT_SPC  MT(MOD_LSFT, KC_SPC)
-#define RSFT_SPC MT(MOD_RSFT, KC_SPC)
-#define AGR_BSP  MT(MOD_RALT, KC_BSPC)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -338,17 +328,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
     // Regular user keycode case statement
     switch (keycode) {
-        case CAPSWORD:
-            if (record->event.pressed) {
-                enable_caps_word();
-                enable_xcase_with(SE_UNDS);
-            }
-            return false;
-        case SNEKCASE:
-            if (record->event.pressed) {
-                enable_xcase_with(SE_UNDS);
-            }
-            return false;
         case SE_TILDE:
             if (record->event.pressed) {
                 SEND_STRING("~");
