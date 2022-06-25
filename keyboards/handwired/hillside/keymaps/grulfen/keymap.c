@@ -235,6 +235,8 @@ const key_override_t **key_overrides = (const key_override_t *[]) {
 
 enum combo_events {
   IO_BSPC,
+  RBRCCBR_BSPC,
+  HOMEEND_BSPC,
   KL_ENT,
   XC_ESC,
   WE_TAB,
@@ -248,6 +250,8 @@ enum combo_events {
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 const uint16_t PROGMEM io_combo[] = {KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM rbrccbrr_combo[] = {SE_RBRC, SE_RCBR, COMBO_END};
+const uint16_t PROGMEM homeend_combo[] = {KC_HOME, KC_END, COMBO_END};
 const uint16_t PROGMEM kl_combo[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM xc_combo[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM we_combo[] = {KC_W, KC_E, COMBO_END};
@@ -259,6 +263,8 @@ const uint16_t PROGMEM commadot_combo[] = {SE_COMM, SE_DOT, COMBO_END};
 
 combo_t key_combos[] = {
     [IO_BSPC] = COMBO(io_combo, KC_BSPC),
+    [RBRCCBR_BSPC] = COMBO(rbrccbrr_combo, KC_BSPC),
+    [HOMEEND_BSPC] = COMBO(homeend_combo, KC_BSPC),
     [KL_ENT] = COMBO(kl_combo, KC_ENT),
     [XC_ESC] = COMBO(xc_combo, KC_ESC),
     [WE_TAB] = COMBO(we_combo, KC_TAB),
