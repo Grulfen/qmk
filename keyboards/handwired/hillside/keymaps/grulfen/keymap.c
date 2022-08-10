@@ -240,13 +240,17 @@ enum combo_events {
   KL_ENT,
   XC_ESC,
   WE_TAB,
+  UJ_ARNG,
   OP_ARNG,
-  KSEMICOLON_ODIA,
+  IK_ADIA,
   LSEMICOLON_ADIA,
+  OL_ODIA,
+  KSEMICOLON_ODIA,
   MCOMMA_MINS,
   COMMADOT_UNDS,
   COMBO_LENGTH
 };
+
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 const uint16_t PROGMEM io_combo[] = {KC_I, KC_O, COMBO_END};
@@ -256,6 +260,9 @@ const uint16_t PROGMEM kl_combo[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM xc_combo[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM we_combo[] = {KC_W, KC_E, COMBO_END};
 const uint16_t PROGMEM op_combo[] = {KC_O, KC_P, COMBO_END};
+const uint16_t PROGMEM uj_combo[] = {KC_U, KC_J, COMBO_END};
+const uint16_t PROGMEM ik_combo[] = {KC_I, KC_K, COMBO_END};
+const uint16_t PROGMEM ol_combo[] = {KC_O, KC_L, COMBO_END};
 const uint16_t PROGMEM ksemicolon_combo[] = {KC_K, SE_SCLN, COMBO_END};
 const uint16_t PROGMEM lsemicolon_combo[] = {KC_L, SE_SCLN, COMBO_END};
 const uint16_t PROGMEM mcomma_combo[] = {KC_M, SE_COMM, COMBO_END};
@@ -268,9 +275,12 @@ combo_t key_combos[] = {
     [KL_ENT] = COMBO(kl_combo, KC_ENT),
     [XC_ESC] = COMBO(xc_combo, KC_ESC),
     [WE_TAB] = COMBO(we_combo, KC_TAB),
+    [UJ_ARNG] = COMBO(uj_combo, SE_ARNG),
     [OP_ARNG] = COMBO(op_combo, SE_ARNG),
-    [KSEMICOLON_ODIA] = COMBO(ksemicolon_combo, SE_ODIA),
+    [IK_ADIA] = COMBO(ik_combo, SE_ADIA),
     [LSEMICOLON_ADIA] = COMBO(lsemicolon_combo, SE_ADIA),
+    [OL_ODIA] = COMBO(ol_combo, SE_ODIA),
+    [KSEMICOLON_ODIA] = COMBO(ksemicolon_combo, SE_ODIA),
     [MCOMMA_MINS] = COMBO(mcomma_combo, SE_MINS),
     [COMMADOT_UNDS] = COMBO(commadot_combo, SE_UNDS),
 };
