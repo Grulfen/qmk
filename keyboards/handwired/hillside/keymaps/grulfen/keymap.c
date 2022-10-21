@@ -102,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Nav Layer: Media, navigation, F-keys
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |  tab |ALTTAB|alttab|      |      |                              | PgDn | PgUp | Home | End  | VolUp|        |
+ * |        |  tab |alttab|ALTTAB|      |      |                              | PgDn | PgUp | Home | End  | VolUp|        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |  gui | alt  | shft | ctrl |Ctrl-b|                              |  ←   |  ↓   |  ↑   |   →  | VolDn|        |
  * |--------+------+------+------+------+------+------.                ,------+------+------+------+------+------+--------|
@@ -113,7 +113,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_NAV] = LAYOUT(
-      _______, KC_TAB , ALT_TAB, SA_TAB , _______, _______,                                     KC_PGDN, KC_PGUP, KC_HOME, KC_END,  KC_VOLU, _______,
+      _______, KC_TAB , SA_TAB,  ALT_TAB, _______, _______,                                     KC_PGDN, KC_PGUP, KC_HOME, KC_END,  KC_VOLU, _______,
       _______, OS_GUI , OS_ALT , OS_SFT , OS_CTL , C(KC_B),                                     KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_VOLD, _______,
       _______, KC_PSCR, _______, _______, _______, _______, _______,                   _______,KC_PAUSE, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
