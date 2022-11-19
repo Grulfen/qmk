@@ -1,3 +1,5 @@
+CONVERT_TO = stemcell
+STMC_US = yes
 OLED_ENABLE = no
 OLED_DRIVER = SSD1306      # Enables the use of OLED displays
 ENCODER_ENABLE = yes       # Enable the use of one or more encoders
