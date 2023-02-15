@@ -325,7 +325,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         &os_alt_state, KC_LALT, OS_ALT, keycode, record
     );
     update_oneshot(
-        &os_cmd_state, KC_LGUI, OS_GUI,keycode, record
+        &os_cmd_state, KC_LGUI, OS_GUI, keycode, record
     );
 
     update_swapper(&sw_win_active, KC_LALT, KC_TAB, KC_LSFT, ALT_TAB, SA_TAB, keycode, record);
