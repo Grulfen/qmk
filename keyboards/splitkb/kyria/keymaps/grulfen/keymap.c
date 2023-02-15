@@ -405,7 +405,7 @@ void left_encoder(bool clockwise) {
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {  // Left encoder
-        left_encoder(clockwise);
+        left_encoder(!clockwise);  // For some reason the clockwise is flipped for me on the kyria
     }
     return false;
 }
