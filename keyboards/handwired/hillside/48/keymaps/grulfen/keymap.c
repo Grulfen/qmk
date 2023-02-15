@@ -355,13 +355,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 // }}}
 
 // {{{ Encoder
-bool encoder_update_user(uint8_t index, bool clockwise) {
-    if (index == 0) {  // Left encoder
+void left_encoder(bool clockwise) {
+    if (layer_state_is(_SYM)) {
+        if (clockwise) {
+            tap_code(KC_RIGHT);
+        } else {
+            tap_code(KC_LEFT);
+        }
+    } else {
         if (clockwise) {
             tap_code(KC_DOWN);
         } else {
             tap_code(KC_UP);
         }
+    }
+}
+
+bool encoder_update_user(uint8_t index, bool clockwise) {
+    if (index == 0) {  // Left encoder
+        left_encoder(clockwise);
     }
     return false;
 }
