@@ -29,8 +29,11 @@ void dance_capsword(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         enable_caps_word();
         enable_xcase_with(SE_UNDS);
-    } else {
+    } else if (state->count == 2) {
         enable_xcase_with(SE_UNDS);
+    } else {
+        set_oneshot_mods(MOD_LSFT);
+        enable_xcase_with(OSM(MOD_LSFT));
         reset_tap_dance(state);
     }
 }
@@ -55,9 +58,7 @@ enum layers {
 };
 
 enum custom_keycodes {
-    CAPSWORD = SAFE_RANGE,
-    SNEKCASE,
-    SE_TILDE,
+    SE_TILDE = SAFE_RANGE,
     SE_GRAVE,
     SE_HATT,
     OS_CTL,
@@ -78,14 +79,6 @@ enum custom_keycodes {
 #define C_SC2_N  LM(_SC2_NUM, MOD_LCTL)
 #define S_SC2_N  LM(_SC2_NUM, MOD_LSFT)
 
-#define CTL_ESC  MT(MOD_LCTL, KC_ESC)
-#define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
-#define CTL_MINS MT(MOD_RCTL, KC_MINUS)
-#define ALT_ENT  MT(MOD_LALT, KC_ENT)
-#define SFT_SPC  MT(MOD_LSFT, KC_SPC)
-#define RSFT_SPC MT(MOD_RSFT, KC_SPC)
-#define AGR_BSP  MT(MOD_RALT, KC_BSPC)
-
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
@@ -94,19 +87,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |  Tab   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |   Å    |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |  Esc   |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  |   Ö  |   Ä    |
+ * |  Esc   |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  |   ;  |   Ä    |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * |        |   Z  |   X  |   C  |   V  |   B  |      |      |  |      |      |   N  |   M  | ,  < | . >  | /  ? |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        | SE/US|Caps- | Nav  |Numbar|      |  |      | Space| Sym  | AltGr| SC2  |
+ *                        | SE/US|Caps- | Nav  |Numbar|      |  |      | Space| Sym  | BSPC | SC2  |
  *                        |      |Word  |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
      KC_TAB  ,   SE_Q ,  SE_W  ,  SE_E  ,   SE_R ,   SE_T ,                                        SE_Y,   SE_U ,   SE_I ,   SE_O ,   SE_P , SE_ARNG,
-     KC_ESC  ,   SE_A ,  SE_S  ,  SE_D  ,   SE_F ,   SE_G ,                                        SE_H,   SE_J ,   SE_K ,   SE_L , SE_ODIA, SE_ADIA,
+     KC_ESC  ,   SE_A ,  SE_S  ,  SE_D  ,   SE_F ,   SE_G ,                                        SE_H,   SE_J ,   SE_K ,   SE_L , SE_SCLN, SE_ADIA,
      _______ ,   SE_Z ,  SE_X  ,  SE_C  ,   SE_V ,   SE_B , _______, _______, _______, _______,    SE_N,   SE_M , SE_COMM, SE_DOT , SE_SLSH, _______,
-                     KEY_OVERRIDE_TOGGLE, TD_CPS ,   NAV  , NUMBAR, _______, _______,  KC_SPC,     SYM, KC_RALT, SC2
+                     KEY_OVERRIDE_TOGGLE, TD_CPS ,   NAV  ,  NUMBAR, _______, _______,  KC_SPC,     SYM, KC_BSPC, SC2
     ),
 /*
  * Nav Layer: Media, navigation, F-keys
@@ -257,19 +250,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 layer_state_t layer_state_set_user(layer_state_t state) {
     return update_tri_layer_state(state, _SYM, _NAV, _NUMBER);
 }
+
 // }}}
 
 // {{{ key overrides
 // Add key overrides to emulate american layout on swedish keyboard
-// ä and ö are available under ctrl modifier
-const key_override_t adia_key_override = ko_make_basic(MOD_MASK_CTRL, SE_ADIA, SE_ADIA);   // ctrl + ä -> ä
-const key_override_t dquo_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_ADIA, SE_DQUO);  // shift + ä -> "
-const key_override_t quot_key_override = ko_make_basic(0, SE_ADIA, SE_QUOT);               // ä -> '
-
-const key_override_t odia_key_override = ko_make_basic(MOD_MASK_CTRL, SE_ODIA, SE_ODIA);   // ctrl + ö -> ö
-const key_override_t coln_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_ODIA, SE_COLN); // shift + ö -> :
-const key_override_t scln_key_override = ko_make_basic(0, SE_ODIA, SE_SCLN);               // ö -> ;
-
+const key_override_t coln_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_SCLN, SE_COLN);  // shift + ; -> :
 const key_override_t labk_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_COMM, SE_LABK);  // shift + , -> <
 const key_override_t rabk_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_DOT, SE_RABK);   // shift + . -> >
 const key_override_t squo_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_QUOT, SE_DQUO);  // shift + ' -> "
@@ -277,14 +263,7 @@ const key_override_t squo_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_QUOT, 
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL); // shift + backspace -> Del
 
 const key_override_t **key_overrides = (const key_override_t *[]) {
-    &adia_key_override,
-    &dquo_key_override,
-    &quot_key_override,
-
-    &odia_key_override,
     &coln_key_override,
-    &scln_key_override,
-
     &labk_key_override,
     &rabk_key_override,
     &squo_key_override,
@@ -299,80 +278,38 @@ const key_override_t **key_overrides = (const key_override_t *[]) {
 // {{{ combos
 
 enum combo_events {
-  IO_BSPC,
   KL_ENT,
   XC_ESC,
   WE_TAB,
   OP_ARNG,
-  RF_LPRN,
-  UJ_RPRN,
-  ED_LBRC,
-  IK_RBRC,
-  WS_LCBR,
-  OL_RCBR,
-  QA_TILDE,
-  AZ_GRAVE,
   LSEMICOLON_ADIA,
+  KSEMICOLON_ODIA,
   MCOMMA_MINS,
   COMMADOT_UNDS,
   COMBO_LENGTH
 };
+
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
-const uint16_t PROGMEM io_combo[] = {KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM kl_combo[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM xc_combo[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM we_combo[] = {KC_W, KC_E, COMBO_END};
 const uint16_t PROGMEM op_combo[] = {KC_O, KC_P, COMBO_END};
-const uint16_t PROGMEM rf_combo[] = {KC_R, KC_F, COMBO_END};
-const uint16_t PROGMEM uj_combo[] = {KC_U, KC_J, COMBO_END};
-const uint16_t PROGMEM ed_combo[] = {KC_E, KC_D, COMBO_END};
-const uint16_t PROGMEM ik_combo[] = {KC_I, KC_K, COMBO_END};
-const uint16_t PROGMEM ws_combo[] = {KC_W, KC_S, COMBO_END};
-const uint16_t PROGMEM ol_combo[] = {KC_O, KC_L, COMBO_END};
-const uint16_t PROGMEM qa_combo[] = {KC_Q, KC_A, COMBO_END};
-const uint16_t PROGMEM az_combo[] = {KC_A, KC_Z, COMBO_END};
-const uint16_t PROGMEM lsemicolon_combo[] = {KC_L, SE_ODIA, COMBO_END};
+const uint16_t PROGMEM ksemicolon_combo[] = {KC_K, SE_SCLN, COMBO_END};
+const uint16_t PROGMEM lsemicolon_combo[] = {KC_L, SE_SCLN, COMBO_END};
 const uint16_t PROGMEM mcomma_combo[] = {KC_M, SE_COMM, COMBO_END};
 const uint16_t PROGMEM commadot_combo[] = {SE_COMM, SE_DOT, COMBO_END};
 
 combo_t key_combos[] = {
-    [IO_BSPC] = COMBO(io_combo, KC_BSPC),
     [KL_ENT] = COMBO(kl_combo, KC_ENT),
     [XC_ESC] = COMBO(xc_combo, KC_ESC),
     [WE_TAB] = COMBO(we_combo, KC_TAB),
     [OP_ARNG] = COMBO(op_combo, SE_ARNG),
-    [RF_LPRN] = COMBO(rf_combo, SE_LPRN),
-    [UJ_RPRN] = COMBO(uj_combo, SE_RPRN),
-    [ED_LBRC] = COMBO(ed_combo, SE_LBRC),
-    [IK_RBRC] = COMBO(ik_combo, SE_RBRC),
-    [WS_LCBR] = COMBO(ws_combo, SE_LCBR),
-    [OL_RCBR] = COMBO(ol_combo, SE_RCBR),
-    [QA_TILDE] = COMBO(qa_combo, SE_TILDE),
-    [AZ_GRAVE] = COMBO(az_combo, SE_GRAVE),
     [LSEMICOLON_ADIA] = COMBO(lsemicolon_combo, SE_ADIA),
+    [KSEMICOLON_ODIA] = COMBO(ksemicolon_combo, SE_ODIA),
     [MCOMMA_MINS] = COMBO(mcomma_combo, SE_MINS),
     [COMMADOT_UNDS] = COMBO(commadot_combo, SE_UNDS),
 };
-// }}}
-
-// {{{ rotary encoder
-
-#ifdef ENCODER_ENABLE
-bool encoder_update_user(uint8_t index, bool clockwise) {
-
-    if (index == 0) {
-        // Volume control
-        if (clockwise) {
-            tap_code(KC_UP);
-        } else {
-            tap_code(KC_DOWN);
-        }
-    }
-    return false;
-}
-#endif
-
 // }}}
 
 // {{{ process_record_user
@@ -426,17 +363,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
     // Regular user keycode case statement
     switch (keycode) {
-        case CAPSWORD:
-            if (record->event.pressed) {
-                enable_caps_word();
-                enable_xcase_with(SE_UNDS);
-            }
-            return false;
-        case SNEKCASE:
-            if (record->event.pressed) {
-                enable_xcase_with(SE_UNDS);
-            }
-            return false;
         case SE_TILDE:
             if (record->event.pressed) {
                 SEND_STRING("~");
@@ -457,6 +383,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     }
 }
 
+// }}}
+
+// {{{ Encoder
+#ifdef ENCODER_ENABLE
+void left_encoder(bool clockwise) {
+    if (layer_state_is(_SYM)) {
+        if (clockwise) {
+            tap_code(KC_RIGHT);
+        } else {
+            tap_code(KC_LEFT);
+        }
+    } else {
+        if (clockwise) {
+            tap_code(KC_DOWN);
+        } else {
+            tap_code(KC_UP);
+        }
+    }
+}
+
+bool encoder_update_user(uint8_t index, bool clockwise) {
+    if (index == 0) {  // Left encoder
+        left_encoder(clockwise);
+    }
+    return false;
+}
+#endif
 // }}}
 
 // vim: set foldmethod=marker:foldlevel=0
