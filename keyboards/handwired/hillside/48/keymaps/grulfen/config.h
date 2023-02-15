@@ -26,8 +26,8 @@
 // #define SPLIT_USB_DETECT
 // #define NO_USB_STARTUP_CHECK
 
-#define ONESHOT_TIMEOUT 1000  // Time in ms before the one shot key is released
-#define ONESHOT_TAP_TOGGLE 5  // tapping this number of times holds the key until tapped once
+#define ONESHOT_TIMEOUT 1000 // Time in ms before the one shot key is released
+#define ONESHOT_TAP_TOGGLE 5 // tapping this number of times holds the key until tapped once
 
 // Use shift instead of capslock for caps_word
 #define CAPSWORD_USE_SHIFT
