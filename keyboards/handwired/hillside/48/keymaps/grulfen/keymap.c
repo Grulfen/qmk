@@ -379,9 +379,27 @@ void left_encoder(bool clockwise) {
     }
 }
 
+void right_encoder(bool clockwise) {
+    if (layer_state_is(_NAV)) {
+        if (clockwise) {
+            SEND_STRING("g+");
+        } else {
+            SEND_STRING("g-");
+        }
+    } else {
+        if (clockwise) {
+            tap_code16(LCTL(SE_R));
+        } else {
+            tap_code(SE_U);
+        }
+    }
+}
+
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {  // Left encoder
         left_encoder(clockwise);
+    } else if (index == 1) { // Right encoder
+        right_encoder(clockwise);
     }
     return false;
 }
