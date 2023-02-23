@@ -358,9 +358,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 void left_encoder(bool clockwise) {
     if (layer_state_is(_SYM)) {
         if (clockwise) {
-            tap_code(KC_RIGHT);
+            tap_code(KC_DOWN);
+            tap_code(KC_DOWN);
+            tap_code(KC_DOWN);
+            tap_code(KC_DOWN);
+            tap_code(KC_DOWN);
         } else {
-            tap_code(KC_LEFT);
+            tap_code(KC_UP);
+            tap_code(KC_UP);
+            tap_code(KC_UP);
+            tap_code(KC_UP);
+            tap_code(KC_UP);
         }
     } else {
         if (clockwise) {
