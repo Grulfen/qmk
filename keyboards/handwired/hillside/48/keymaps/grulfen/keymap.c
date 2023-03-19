@@ -88,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------+------.                ,------+------+------+------+------+------+--------|
  * |        |   Z  |   X  |   C  |   V  |   B  |      |                |      |   N  |   M  | ,  < | . >  | /  ? |        |
  * `----------------------+------+------+------+------+------.  ,------+------+------+------+------+----------------------'
- *                        |      |Caps- | Nav  |Numbar|      |  |      | Space| Sym  | BSPC |      |
+ *                        |      |Caps- | Nav  |Numbar|Shift |  | Shift| Space| Sym  | BSPC |      |
  *                        |      |Word  |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
@@ -96,7 +96,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      _______ ,   SE_Q ,  SE_W  ,  SE_E  ,   SE_R ,   SE_T ,                                        SE_Y,   SE_U ,   SE_I ,   SE_O ,   SE_P , _______,
      _______ ,   SE_A ,  SE_S  ,  SE_D  ,   SE_F ,   SE_G ,                                        SE_H,   SE_J ,   SE_K ,   SE_L , SE_SCLN, _______,
      _______ ,   SE_Z ,  SE_X  ,  SE_C  ,   SE_V ,   SE_B , _______,                   _______,    SE_N,   SE_M , SE_COMM, SE_DOT , SE_SLSH, _______,
-                                _______ , TD_CPS ,   NAV  , NUMBAR , _______, _______,  KC_SPC,     SYM, KC_BSPC, _______
+                                _______ , TD_CPS ,   NAV  , NUMBAR , KC_LSFT, KC_LSFT,  KC_SPC,     SYM, KC_BSPC, _______
     ),
 /*
  * Nav Layer: Media, navigation, F-keys
