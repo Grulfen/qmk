@@ -234,7 +234,7 @@ const key_override_t **key_overrides = (const key_override_t *[]) {
 // {{{ combos
 
 enum combo_events {
-  KL_ENT,
+  JKL_ENT,
   XC_ESC,
   WE_TAB,
   UJ_ARNG,
@@ -250,7 +250,7 @@ enum combo_events {
 
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
-const uint16_t PROGMEM kl_combo[] = {KC_K, KC_L, COMBO_END};
+const uint16_t PROGMEM jkl_combo[] = {KC_J, KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM xc_combo[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM we_combo[] = {KC_W, KC_E, COMBO_END};
 const uint16_t PROGMEM op_combo[] = {KC_O, KC_P, COMBO_END};
@@ -263,7 +263,7 @@ const uint16_t PROGMEM mcomma_combo[] = {KC_M, SE_COMM, COMBO_END};
 const uint16_t PROGMEM commadot_combo[] = {SE_COMM, SE_DOT, COMBO_END};
 
 combo_t key_combos[] = {
-    [KL_ENT] = COMBO(kl_combo, KC_ENT),
+    [JKL_ENT] = COMBO(jkl_combo, KC_ENT),
     [XC_ESC] = COMBO(xc_combo, KC_ESC),
     [WE_TAB] = COMBO(we_combo, KC_TAB),
     [UJ_ARNG] = COMBO(uj_combo, SE_ARNG),
