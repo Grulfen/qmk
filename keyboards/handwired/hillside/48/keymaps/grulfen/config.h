@@ -31,3 +31,6 @@
 
 // Use shift instead of capslock for caps_word
 #define CAPSWORD_USE_SHIFT
+
+// Use kinetic speed for mouse to allow for more precise movements
+#define MK_KINETIC_SPEED
