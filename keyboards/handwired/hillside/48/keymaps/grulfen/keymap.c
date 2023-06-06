@@ -22,9 +22,13 @@
 #include "sendstring_swedish.h"
 
 // {{{ tap dances
-enum {
-    TD_CAPS
+enum td_keycodes {
+    TD_CAPS,
+    TD_SYMB
 };
+
+void td_sym_tap_fn(qk_tap_dance_state_t *state, void *user_data);
+void td_sym_reset_fn(qk_tap_dance_state_t *state, void *user_data);
 
 void dance_capsword(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
@@ -41,9 +45,11 @@ void dance_capsword(qk_tap_dance_state_t *state, void *user_data) {
 
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_CAPS] = ACTION_TAP_DANCE_FN(dance_capsword),
+    [TD_SYMB] = ACTION_TAP_DANCE_FN_ADVANCED(td_sym_tap_fn, NULL, td_sym_reset_fn),
 };
 
 #define TD_CPS TD(TD_CAPS)
+#define TD_SYM TD(TD_SYMB)
 // }}}
 
 // {{{ layers
@@ -52,6 +58,7 @@ enum layers {
     _QWERTY = 0,
     _NAV,
     _SYM,
+    _SYM2,
     _NUMBER,
     _NUMBAR,
 };
@@ -70,7 +77,6 @@ enum custom_keycodes {
 
 // Aliases for readability
 #define QWERTY   DF(_QWERTY)
-
 #define SYM      MO(_SYM)
 #define NAV      MO(_NAV)
 #define NUMBAR   MO(_NUMBAR)
@@ -96,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      _______ ,   SE_Q ,  SE_W  ,  SE_E  ,   SE_R ,   SE_T ,                                        SE_Y,   SE_U ,   SE_I ,   SE_O ,   SE_P , _______,
      _______ ,   SE_A ,  SE_S  ,  SE_D  ,   SE_F ,   SE_G ,                                        SE_H,   SE_J ,   SE_K ,   SE_L , SE_SCLN, _______,
      _______ ,   SE_Z ,  SE_X  ,  SE_C  ,   SE_V ,   SE_B , _______,                   _______,    SE_N,   SE_M , SE_COMM, SE_DOT , SE_SLSH, _______,
-                                _______ , TD_CPS ,   NAV  , NUMBAR , KC_LSFT, KC_LSFT,  KC_SPC,     SYM, KC_BSPC, _______
+                                _______ , TD_CPS ,   NAV  , NUMBAR , KC_LSFT, KC_LSFT,  KC_SPC,  TD_SYM, KC_BSPC, _______
     ),
 /*
  * Nav Layer: Media, navigation, F-keys
@@ -136,8 +142,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      _______ , KC_ESC , SE_LCBR, SE_LBRC, SE_LPRN,SE_TILDE,                                     SE_HATT, SE_RPRN, SE_RBRC, SE_RCBR,SE_GRAVE, _______,
      _______ , SE_MINS, SE_ASTR, SE_EQL , SE_UNDS, SE_DLR ,                                     SE_HASH, OS_CTL , OS_SFT , OS_ALT , OS_GUI , _______,
      _______ , SE_PLUS, SE_PIPE, SE_AT  , SE_SLSH, SE_PERC, _______,                   _______, SE_QUOT, SE_BSLS, SE_AMPR, SE_QUES, SE_EXLM, _______,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+                                 _______, _______, _______, _______, _______, _______, _______,  TD_SYM, _______, _______
    ),
+/*
+ * Sym2 Layer: Empty
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |        |      |      |MOUSE1|MOUSE2|      |                              |  ←   |  ↓   |  ↑   |   →  |      |        |
+ * |--------+------+------+------+------+------+------.                ,------+------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |                |      |      |      |      |      |      |        |
+ * `----------------------+------+------+------+------+------.  ,------+------+------+------+------+----------------------'
+ *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        |      |      |      |      |      |  |      |      |      |      |      |
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [_SYM2] = LAYOUT(
+      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, KC_BTN1, KC_BTN2, _______,                                     KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______, _______,
+      _______, _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
 
 /*
  * Num Layer: Numbers
@@ -282,6 +308,7 @@ combo_t key_combos[] = {
 bool is_oneshot_cancel_key(uint16_t keycode) {
     switch (keycode) {
     case SYM:
+    case TD_SYM:
     case NAV:
         return true;
     default:
@@ -292,6 +319,7 @@ bool is_oneshot_cancel_key(uint16_t keycode) {
 bool is_oneshot_ignored_key(uint16_t keycode) {
     switch (keycode) {
     case SYM:
+    case TD_SYM:
     case NAV:
     case OS_SFT:
     case OS_CTL:
@@ -356,7 +384,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
 // {{{ Encoder
 void left_encoder(bool clockwise) {
-    if (layer_state_is(_SYM)) {
+    if (layer_state_is(_SYM2)) {
+        if (clockwise) {
+            tap_code16(KC_MS_WH_DOWN);
+        } else {
+            tap_code16(KC_MS_WH_UP);
+        }
+    } else if (layer_state_is(_SYM)) {
         if (clockwise) {
             tap_code(KC_DOWN);
             tap_code(KC_DOWN);
@@ -404,5 +438,21 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     return false;
 }
 // }}}
+
+// {{{ tap dance function definitions
+void td_sym_tap_fn(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        layer_on(_SYM);
+    } else if (state->count == 2) {
+        layer_on(_SYM2);
+    }
+}
+
+void td_sym_reset_fn(qk_tap_dance_state_t *state, void *user_data) {
+    layer_off(_SYM2);
+    layer_off(_SYM);
+};
+// }}}
+
 
 // vim: set foldmethod=marker:foldlevel=0
