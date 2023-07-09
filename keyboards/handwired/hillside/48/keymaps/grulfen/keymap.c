@@ -58,7 +58,7 @@ enum layers {
     _QWERTY = 0,
     _NAV,
     _SYM,
-    _SYM2,
+    _MOUSE,
     _NUMBER,
     _NUMBAR,
 };
@@ -145,7 +145,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  _______, _______, _______, _______, _______, _______, _______,  TD_SYM, _______, _______
    ),
 /*
- * Sym2 Layer: Empty
+ * Sym2 Layer: Mouse stuff
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
@@ -158,7 +158,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
-    [_SYM2] = LAYOUT(
+    [_MOUSE] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
       _______, _______, _______, KC_BTN1, KC_BTN2, _______,                                     KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______, _______,
       _______, _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______, _______,
@@ -381,7 +381,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
 // {{{ Encoder
 void left_encoder(bool clockwise) {
-    if (layer_state_is(_SYM2)) {
+    if (layer_state_is(_MOUSE)) {
         if (clockwise) {
             tap_code16(KC_MS_WH_DOWN);
         } else {
@@ -441,12 +441,12 @@ void td_sym_tap_fn(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         layer_on(_SYM);
     } else if (state->count == 2) {
-        layer_on(_SYM2);
+        layer_on(_MOUSE);
     }
 }
 
 void td_sym_reset_fn(qk_tap_dance_state_t *state, void *user_data) {
-    layer_off(_SYM2);
+    layer_off(_MOUSE);
     layer_off(_SYM);
 };
 // }}}
