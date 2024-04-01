@@ -27,10 +27,10 @@ enum td_keycodes {
     TD_SYMB
 };
 
-void td_sym_tap_fn(qk_tap_dance_state_t *state, void *user_data);
-void td_sym_reset_fn(qk_tap_dance_state_t *state, void *user_data);
+void td_sym_tap_fn(tap_dance_state_t *state, void *user_data);
+void td_sym_reset_fn(tap_dance_state_t *state, void *user_data);
 
-void dance_capsword(qk_tap_dance_state_t *state, void *user_data) {
+void dance_capsword(tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         enable_caps_word();
         enable_xcase_with(SE_UNDS);
@@ -43,7 +43,7 @@ void dance_capsword(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-qk_tap_dance_action_t tap_dance_actions[] = {
+tap_dance_action_t tap_dance_actions[] = {
     [TD_CAPS] = ACTION_TAP_DANCE_FN(dance_capsword),
     [TD_SYMB] = ACTION_TAP_DANCE_FN_ADVANCED(td_sym_tap_fn, NULL, td_sym_reset_fn),
 };
@@ -437,7 +437,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 // }}}
 
 // {{{ tap dance function definitions
-void td_sym_tap_fn(qk_tap_dance_state_t *state, void *user_data) {
+void td_sym_tap_fn(tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         layer_on(_SYM);
     } else if (state->count == 2) {
@@ -445,7 +445,7 @@ void td_sym_tap_fn(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void td_sym_reset_fn(qk_tap_dance_state_t *state, void *user_data) {
+void td_sym_reset_fn(tap_dance_state_t *state, void *user_data) {
     layer_off(_MOUSE);
     layer_off(_SYM);
 };
