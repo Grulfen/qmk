@@ -16,9 +16,6 @@
 
 #pragma once
 
-// Lets you roll mod-tap keys
-#define IGNORE_MOD_TAP_INTERRUPT
-
 // How long until hold action happens
 #define TAPPING_TERM 200
 
