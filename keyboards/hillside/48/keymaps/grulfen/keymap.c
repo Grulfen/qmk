@@ -87,6 +87,8 @@ enum custom_keycodes {
     SA_TAB,
     MC_TAB,
     MC_STAB,
+    MC_TICK,
+    MC_STICK,
 };
 
 // Aliases for readability
@@ -207,7 +209,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Mac_Nav Layer: Mac Media, navigation, F-keys
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |  tab |alttab|ALTTAB|      |      |                              | PgDn | PgUp | Home | End  | VolUp|        |
+ * |        |  tab |alttab|ALTTAB|alt+` |ALT+` |                              | PgDn | PgUp | Home | End  | VolUp|        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |  gui | alt  | shft | ctrl |Ctrl-b|                              |  ←   |  ↓   |  ↑   |   →  | VolDn|        |
  * |--------+------+------+------+------+------+------.                ,------+------+------+------+------+------+--------|
@@ -218,7 +220,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_MAC_NAV] = LAYOUT(
-      _______, KC_TAB , MC_STAB, MC_TAB , _______, _______,                                     KC_PGDN, KC_PGUP, KC_HOME, KC_END,  KC_VOLU, _______,
+      _______, KC_TAB , MC_STAB, MC_TAB , MC_TICK,MC_STICK,                                     KC_PGDN, KC_PGUP, KC_HOME, KC_END,  KC_VOLU, _______,
       _______, OS_GUI , OS_ALT , OS_SFT , OS_CTL , C(KC_B),                                     KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_VOLD, _______,
       _______, KC_PSCR, _______, _______, _______, _______, _______,                   _______,KC_PAUSE, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -464,6 +466,7 @@ oneshot_state os_alt_state = os_up_unqueued;
 oneshot_state os_cmd_state = os_up_unqueued;
 
 bool sw_win_active = false;
+bool mac_sw_app_active = false;
 bool mac_sw_win_active = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
@@ -485,7 +488,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     );
 
     update_swapper(&sw_win_active, KC_LALT, KC_TAB, KC_LSFT, ALT_TAB, SA_TAB, keycode, record);
-    update_swapper(&mac_sw_win_active, KC_LGUI, KC_TAB, KC_LSFT, MC_TAB, MC_STAB, keycode, record);
+    update_swapper(&mac_sw_app_active, KC_LGUI, KC_TAB, KC_LSFT, MC_TAB, MC_STAB, keycode, record);
+    update_swapper(&mac_sw_win_active, KC_LGUI, AP_LABK, KC_LSFT, MC_TICK, MC_STICK, keycode, record);
 
     // Regular user keycode case statement
     switch (keycode) {
