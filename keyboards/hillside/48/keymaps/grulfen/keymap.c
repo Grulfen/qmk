@@ -244,15 +244,12 @@ const key_override_t squo_key_override = ko_make_basic(MOD_MASK_SHIFT, SE_QUOT, 
 
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL); // shift + backspace -> Del
 
-const key_override_t **key_overrides = (const key_override_t *[]) {
+const key_override_t *key_overrides[] = {
     &coln_key_override,
     &labk_key_override,
     &rabk_key_override,
     &squo_key_override,
-
     &delete_key_override,
-
-    NULL,
 };
 
 // }}}
