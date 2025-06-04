@@ -514,7 +514,7 @@ void left_encoder(bool clockwise) {
         } else {
             tap_code16(KC_MS_WH_UP);
         }
-    } else if (layer_state_is(_SYM)) {
+    } else if (layer_state_is(_SYM) || layer_state_is(_MAC_SYM)) {
         if (clockwise) {
             tap_code(KC_DOWN);
             tap_code(KC_DOWN);
@@ -538,7 +538,7 @@ void left_encoder(bool clockwise) {
 }
 
 void right_encoder(bool clockwise) {
-    if (layer_state_is(_NAV)) {
+    if (layer_state_is(_NAV) || layer_state_is(_MAC_NAV)) {
         if (clockwise) {
             SEND_STRING("g+");
         } else {
