@@ -506,6 +506,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
 // }}}
 
+// {{{ process_detected_host_os
+
+bool process_detected_host_os_user(os_variant_t detected_os) {
+    switch (detected_os) {
+        case OS_MACOS:
+            set_single_default_layer(_MAC_QWE);
+            break;
+        case OS_WINDOWS:
+        case OS_LINUX:
+            set_single_default_layer(_QWERTY);
+            break;
+        default:
+            break;
+    }
+    return true;
+}
+// }}}
+
 // {{{ Encoder
 void left_encoder(bool clockwise) {
     if (layer_state_is(_MOUSE)) {
