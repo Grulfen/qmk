@@ -302,7 +302,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
     [_MOUSE] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______, _______, KC_BTN1, KC_BTN2, _______,                                     KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______, _______,
+      _______, _______, _______, MS_BTN1, MS_BTN2, _______,                                     MS_LEFT, MS_DOWN,   MS_UP, MS_RGHT, _______, _______,
       _______, _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
@@ -528,9 +528,9 @@ bool process_detected_host_os_user(os_variant_t detected_os) {
 void left_encoder(bool clockwise) {
     if (layer_state_is(_MOUSE)) {
         if (clockwise) {
-            tap_code16(KC_MS_WH_DOWN);
+            tap_code16(MS_WHLD);
         } else {
-            tap_code16(KC_MS_WH_UP);
+            tap_code16(MS_WHLU);
         }
     } else if (layer_state_is(_SYM) || layer_state_is(_MAC_SYM)) {
         if (clockwise) {
