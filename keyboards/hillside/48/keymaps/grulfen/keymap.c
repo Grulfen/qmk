@@ -512,10 +512,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     update_swapper(&mac_sw_app_active, KC_LGUI, KC_TAB, KC_LSFT, MC_TAB, MC_STAB, keycode, record);
     update_swapper(&mac_sw_win_active, KC_LGUI, AP_LABK, KC_LSFT, MC_TICK, MC_STICK, keycode, record);
 
-    rgblight_set_layer_state(0, get_mods() & MOD_BIT(KC_LGUI));
-    rgblight_set_layer_state(1, get_mods() & MOD_BIT(KC_LALT));
-    rgblight_set_layer_state(2, get_mods() & MOD_BIT(KC_LSFT));
-    rgblight_set_layer_state(3, get_mods() & MOD_BIT(KC_LCTL));
+    rgblight_set_layer_state(0, os_cmd_state == os_up_queued);
+    rgblight_set_layer_state(1, os_alt_state == os_up_queued);
+    rgblight_set_layer_state(2, os_shft_state == os_up_queued);
+    rgblight_set_layer_state(3, os_ctrl_state == os_up_queued);
 
     // Regular user keycode case statement
     switch (keycode) {
