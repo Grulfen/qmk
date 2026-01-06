@@ -1,7 +1,7 @@
 OLED_ENABLE = no
 OLED_DRIVER = SSD1306      # Enables the use of OLED displays
 ENCODER_ENABLE = yes       # Enable the use of one or more encoders
-RGBLIGHT_ENABLE = no       # Disable keyboard RGB underglow
+RGBLIGHT_ENABLE = yes      # Enable keyboard RGB underglow
 PIN_COMPATIBLE = elite_c
 OS_DETECTION_ENABLE = yes
 
