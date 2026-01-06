@@ -59,6 +59,36 @@ tap_dance_action_t tap_dance_actions[] = {
 #define TD_MC_S TD(TD_MAC_SYMB)
 // }}}
 
+// {{{ RGB oneshots status
+const rgblight_segment_t PROGMEM my_gui_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+        {4, 1, HSV_RED}
+);
+
+const rgblight_segment_t PROGMEM my_alt_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+        {3, 1, HSV_RED}
+);
+
+const rgblight_segment_t PROGMEM my_shift_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+        {2, 1, HSV_RED}
+);
+
+const rgblight_segment_t PROGMEM my_ctrl_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+        {1, 1, HSV_RED}
+);
+
+const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+        my_gui_layer,
+        my_alt_layer,
+        my_shift_layer,
+        my_ctrl_layer
+);
+
+void keyboard_post_init_user(void) {
+    // Enable the LED layers
+    rgblight_layers = my_rgb_layers;
+}
+// }}}
+
 // {{{ layers
 
 enum layers {
@@ -481,6 +511,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     update_swapper(&sw_win_active, KC_LALT, KC_TAB, KC_LSFT, ALT_TAB, SA_TAB, keycode, record);
     update_swapper(&mac_sw_app_active, KC_LGUI, KC_TAB, KC_LSFT, MC_TAB, MC_STAB, keycode, record);
     update_swapper(&mac_sw_win_active, KC_LGUI, AP_LABK, KC_LSFT, MC_TICK, MC_STICK, keycode, record);
+
+    rgblight_set_layer_state(0, get_mods() & MOD_BIT(KC_LGUI));
+    rgblight_set_layer_state(1, get_mods() & MOD_BIT(KC_LALT));
+    rgblight_set_layer_state(2, get_mods() & MOD_BIT(KC_LSFT));
+    rgblight_set_layer_state(3, get_mods() & MOD_BIT(KC_LCTL));
 
     // Regular user keycode case statement
     switch (keycode) {
